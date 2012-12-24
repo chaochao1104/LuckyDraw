@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.MediaTracker;
 import java.io.FileNotFoundException;
 
@@ -17,5 +19,15 @@ public class ImageUtil {
 				+ relativeFilePath);
 	}
 	
+	public static ImageIcon fitSize(ImageIcon img, Dimension d) {
+		if (img == null)
+			throw new IllegalArgumentException("img can not be null.");
+		if (d == null)
+			throw new IllegalArgumentException("d can not be null.");
 		
+		Image image = img.getImage();
+        image = image.getScaledInstance(d.height, d.width, Image.SCALE_SMOOTH);
+		
+		return new ImageIcon(image);
+	}
 }
