@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
@@ -21,15 +22,15 @@ public class ContentPane extends JPanel {
 
 	private static final long serialVersionUID = 5744529722826165904L;
 	
-	private JPanel blankBarPanel;
+	private PrizeDisplayPanel pnlPrizeDisplay;
 	
-	private JPanel prizeDisplayPanel;
+	private JPanel pnlDraw;
 	
-	private JPanel drawPanel;
+	private ImageIcon imgMainBackground;
 	
-	private ImageIcon mainBackgroundImg;
+	private Image imgPrize;
 	
-	Point point;
+	Point debugPoint;
 	
 	public ContentPane() {
 		super();
@@ -51,11 +52,10 @@ public class ContentPane extends JPanel {
 			
 			public void mouseMoved(MouseEvent e) {
 				if (e.isControlDown()) {
-					point = e.getPoint();
+					debugPoint = e.getPoint();
 					repaint();
 				} else {
-					point = null;
-					repaint();
+					debugPoint = null;
 				}
 			}
 			
@@ -66,13 +66,13 @@ public class ContentPane extends JPanel {
 	
 		setLayout(null);
 		
-		PrizeDisplayPanel prizeDisplayPanel = new PrizeDisplayPanel();
-		prizeDisplayPanel.setBounds(80, 350, 300, 500);
+		pnlPrizeDisplay = new PrizeDisplayPanel();
+		pnlPrizeDisplay.setBounds(80, 350, 300, 500);
 		try {
 			ImageIcon iconPrize = ImageUtil.loadImg("1.png");
 			ImageIcon fittedImageIcon = 
-					ImageUtil.fitSize(iconPrize, new Dimension(prizeDisplayPanel.getBounds().getSize()));
-			prizeDisplayPanel.setImg(fittedImageIcon);
+					ImageUtil.resizeByContainer(iconPrize, new Dimension(pnlPrizeDisplay.getBounds().getSize()));
+			pnlPrizeDisplay.setImg(fittedImageIcon);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,12 +80,12 @@ public class ContentPane extends JPanel {
 		
 		//prizeDisplayPanel.add(new JButton(), BorderLayout.CENTER);
 		
-		add(prizeDisplayPanel);
+		add(pnlPrizeDisplay);
 	}
 	
 	private void loadResource() {
 		try {
-			mainBackgroundImg = ImageUtil.loadImg("main-background.jpg");
+			imgMainBackground = ImageUtil.loadImg("main-background.jpg");
 		} catch (FileNotFoundException e) {
 			//TODO
 			e.printStackTrace();
@@ -97,16 +97,16 @@ public class ContentPane extends JPanel {
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.drawImage(mainBackgroundImg.getImage(), 0, 0, null);
+		g2.drawImage(imgMainBackground.getImage(), 0, 0, null);
 		
-
+		pnlPrizeDisplay.showImg(g, imgPrize);
+		
 		/*debug*/
 		g2.setColor(Color.BLACK);
 		g2.setFont(Font.getFont("ËÎÌו"));
-		if (point != null) {
-			g2.drawString(point.toString(), 0, 30);
+		if (debugPoint != null) {
+			g2.drawString(debugPoint.toString(), 0, 30);
 		}
 	}
-	
 	
 }
