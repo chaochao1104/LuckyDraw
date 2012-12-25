@@ -7,13 +7,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import util.ImageUtil;
@@ -24,9 +23,9 @@ public class ContentPane extends JPanel {
 	
 	private PrizeDisplayPanel pnlPrizeDisplay;
 	
-	private JPanel pnlDraw;
+	private DrawPanel pnlDraw;
 	
-	private ImageIcon imgMainBackground;
+	private Image imgMainBackground;
 	
 	private Image imgPrize;
 	
@@ -37,14 +36,6 @@ public class ContentPane extends JPanel {
 		loadResource();
 		initComponents();
 		debug();
-		
-		JLabel l = new JLabel("Œ“ «ÀÔ≥¨");
-		l.setBackground(Color.BLACK);
-		l.setForeground(Color.BLACK);
-		l.setOpaque(true);
-		l.setVisible(true);
-		
-		this.add(l);
 	}
 	
 	private void debug() {
@@ -67,20 +58,27 @@ public class ContentPane extends JPanel {
 		setLayout(null);
 		
 		pnlPrizeDisplay = new PrizeDisplayPanel();
-		pnlPrizeDisplay.setBounds(80, 350, 300, 500);
+		pnlPrizeDisplay.setBounds(70, 310, 300, 500);
 		try {
-			ImageIcon iconPrize = ImageUtil.loadImg("1.png");
-			ImageIcon fittedImageIcon = 
-					ImageUtil.resizeByContainer(iconPrize, new Dimension(pnlPrizeDisplay.getBounds().getSize()));
-			pnlPrizeDisplay.setImg(fittedImageIcon);
+			Image imgPrizeOriginal = ImageUtil.loadImg("prize.png");
+			imgPrize = ImageUtil.fitSize(imgPrizeOriginal, pnlPrizeDisplay.getSize());
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		//prizeDisplayPanel.add(new JButton(), BorderLayout.CENTER);
-		
-		add(pnlPrizeDisplay);
+		this.add(pnlPrizeDisplay);
+
+		try {
+			pnlDraw = new DrawPanel(new Point(408, 295), new Dimension(867, 685));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pnlDraw.setOpaque(false);
+
+		this.add(pnlDraw);
 	}
 	
 	private void loadResource() {
@@ -97,11 +95,18 @@ public class ContentPane extends JPanel {
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.drawImage(imgMainBackground.getImage(), 0, 0, null);
+		g2.drawImage(imgMainBackground, 0, 0, null);
 		
-		pnlPrizeDisplay.showImg(g, imgPrize);
+		pnlPrizeDisplay.paintImg(g, imgPrize);
 		
 		/*debug*/
+		g2.setColor(Color.BLUE);
+		paintRect(g2, pnlDraw.getBounds());
+		paintRect(g2, pnlPrizeDisplay.getBounds());
+		paintRect(g2, pnlDraw.getPnlInnerDraw().getBounds());
+		paintRect(g2, pnlDraw.getPnlBtnPanel().getBounds());
+		paintRect(g2, pnlDraw.getPnlBtnPanel().getLblSpecialPrize().getBounds());
+		
 		g2.setColor(Color.BLACK);
 		g2.setFont(Font.getFont("ÀŒÃÂ"));
 		if (debugPoint != null) {
@@ -109,4 +114,9 @@ public class ContentPane extends JPanel {
 		}
 	}
 	
+	//for debug
+	public void paintRect(Graphics g, Rectangle rect) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.drawRect(rect.x, rect.y, rect.width, rect.height);
+	}
 }

@@ -17,7 +17,7 @@ public class MainWindow {
 		contentPane.setOpaque(true);
 		frame.setContentPane(contentPane);
 		frame.setResizable(false);
-		frame.setUndecorated(false);
+		frame.setUndecorated(true);
 
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
