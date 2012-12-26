@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import util.ImageUtil;
@@ -78,7 +79,10 @@ public class ContentPane extends JPanel {
 		}
 		pnlDraw.setOpaque(false);
 
-		this.add(pnlDraw);
+		for (JLabel lblPrize : pnlDraw.getPnlBtnPanel().getPrizeButtons())
+			this.add(lblPrize);
+		
+		
 	}
 	
 	private void loadResource() {
@@ -105,8 +109,7 @@ public class ContentPane extends JPanel {
 		paintRect(g2, pnlPrizeDisplay.getBounds());
 		paintRect(g2, pnlDraw.getPnlInnerDraw().getBounds());
 		paintRect(g2, pnlDraw.getPnlBtnPanel().getBounds());
-		paintRect(g2, pnlDraw.getPnlBtnPanel().getLblSpecialPrize().getBounds());
-		
+				
 		g2.setColor(Color.BLACK);
 		g2.setFont(Font.getFont("ËÎÌו"));
 		if (debugPoint != null) {
