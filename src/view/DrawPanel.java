@@ -1,8 +1,7 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.io.FileNotFoundException;
 
 import javax.swing.JPanel;
@@ -13,31 +12,36 @@ public class DrawPanel extends JPanel {
 
 	private InnerDrawPanel pnlInnerDraw;
 	
-	private BtnPanel pnlBtnPanel;
+	private VerticalPanel pnlVertical;
 	
-	public DrawPanel(Point p, Dimension d) throws FileNotFoundException {
+	private HorizontalPanel pnlHorizontal;
+	
+	public DrawPanel(Dimension preferredSize) throws FileNotFoundException {
 		super();
-		this.setLayout(null);
-		this.setBounds(new Rectangle(p, d));
+		this.setLayout(new BorderLayout());
+		this.setPreferredSize(preferredSize);
 		
 		pnlInnerDraw = new InnerDrawPanel();
-		pnlInnerDraw.setBounds(this.getX(), this.getY(), this.getWidth() - 200, this.getHeight() - 68);
-		pnlInnerDraw.setOpaque(false);
-		this.add(pnlInnerDraw);
+		this.add(pnlInnerDraw, BorderLayout.CENTER);
 		
-		pnlBtnPanel = new BtnPanel(new Point(1100, this.getY() - 30), new Dimension(170, this.getHeight()));
+		pnlVertical = new VerticalPanel(new Dimension(170, this.getHeight()));
+		this.add(pnlVertical, BorderLayout.EAST);
 		
-		
-		this.add(pnlBtnPanel);
-		
+		pnlHorizontal = new HorizontalPanel(new Dimension(this.getWidth(), 70));
+		this.add(pnlHorizontal, BorderLayout.SOUTH);
 	}
 
 	public InnerDrawPanel getPnlInnerDraw() {
 		return pnlInnerDraw;
 	}
 
-	public BtnPanel getPnlBtnPanel() {
-		return pnlBtnPanel;
+	public VerticalPanel getPnlVertical() {
+		return pnlVertical;
 	}
+
+	public HorizontalPanel getPnlHorizontal() {
+		return pnlHorizontal;
+	}
+
 
 }

@@ -2,7 +2,8 @@ package view;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 
@@ -12,7 +13,7 @@ import javax.swing.JPanel;
 
 import util.ImageUtil;
 
-public class BtnPanel extends JPanel {
+public class VerticalPanel extends JPanel {
 
 	private static final long serialVersionUID = 2724873362749474725L;
 
@@ -45,13 +46,20 @@ public class BtnPanel extends JPanel {
 	
 	private static final int INTERVAL = 20;
 	
-	public BtnPanel(Point p, Dimension d) throws FileNotFoundException {
-		this.setBounds(p.x, p.y, d.width, d.height);
-		this.setLayout(null);
+	public VerticalPanel(Dimension preferredSize) throws FileNotFoundException {
+		this.setPreferredSize(preferredSize);
+		this.setOpaque(false);
+		this.setLayout(new GridBagLayout());
+		
 		initComponents();
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridy = 0;
+		c.ipady = 8;
 		for (JLabel lblPrize : lblPrizes) {
-			this.add(lblPrize);
+			this.add(lblPrize, c);
+			c.gridy++;
 		}
+		
 	}
 	
 	private void initComponents() throws FileNotFoundException {

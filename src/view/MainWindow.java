@@ -9,7 +9,7 @@ public class MainWindow {
 	
 	public MainWindow() {}
 	
-	public void start() {
+	public static void start() {
 		JFrame frame = new JFrame("Lucky Draw");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -32,8 +32,12 @@ public class MainWindow {
 	}
 
 	public static void main(String... args) {
-		MainWindow mainWindow = new MainWindow();
-		mainWindow.start();
+
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                start();
+            }
+        });
 	}
 	
 }
