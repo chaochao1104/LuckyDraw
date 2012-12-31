@@ -4,8 +4,8 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -17,6 +17,8 @@ public class VerticalPanel extends JPanel {
 
 	private static final long serialVersionUID = 2724873362749474725L;
 
+	public static final int PRIZE_QTY = 5;
+	
 	private JLabel[] lblPrizes;
 	
 	private ImageIcon[] imgIconState1sts;
@@ -32,16 +34,11 @@ public class VerticalPanel extends JPanel {
 	};
 	
 	private static final String[] state2ndImgNames = {
-//		"special-prize-s2.png",
-//		"1st-prize-s2.png",
-//		"2nd-prize-s2.png",
-//		"3nd-prize-s2.png",
-//		"4th-prize-s2.png",
-		"special-prize-s1.png",
-		"1st-prize-s1.png",
-		"2nd-prize-s1.png",
-		"3rd-prize-s1.png",
-		"4th-prize-s1.png",
+		"special-prize-s2.png",
+		"1st-prize-s2.png",
+		"2nd-prize-s2.png",
+		"3rd-prize-s2.png",
+		"4th-prize-s2.png",
 	};
 	
 	private static final int INTERVAL = 20;
@@ -60,6 +57,7 @@ public class VerticalPanel extends JPanel {
 			c.gridy++;
 		}
 		
+		setButtonDown(0);
 	}
 	
 	private void initComponents() throws FileNotFoundException {
@@ -79,7 +77,6 @@ public class VerticalPanel extends JPanel {
 		tllHeight += (btnCount - 1) * INTERVAL;
 		
 		for (int i = 0; i < btnCount; i++) {
-
 			lblPrizes[i] = new JLabel(imgIconState1sts[i]);
 			lblPrizes[i].setBounds(this.getX() + (this.getWidth() - imgIconState1sts[i].getIconWidth()) / 2, 
 								   this.getY() + (this.getHeight() - tllHeight) / 2 + i * (imgIconState1sts[i].getIconHeight() + INTERVAL),
@@ -89,8 +86,24 @@ public class VerticalPanel extends JPanel {
 		}
 
 	}
-
-	public JLabel[] getPrizeButtons() {
-		return Arrays.copyOf(lblPrizes, lblPrizes.length);
+	
+	public void setMouseListeners(MouseListener[] mouseListeners) {
+		if (mouseListeners.length != PRIZE_QTY)
+			throw new IllegalArgumentException();
+		
+		for (int i = 0; i < mouseListeners.length; i++) {
+			lblPrizes[i].addMouseListener(mouseListeners[i]);
+		}
 	}
+	
+	public void setButtonDown(int idx) {
+		if (idx < 0 || idx > PRIZE_QTY - 1)
+			throw new IllegalArgumentException();
+		
+		for (int i = 0; i < lblPrizes.length; i++)
+			lblPrizes[i].setIcon(imgIconState1sts[i]);
+		
+		lblPrizes[idx].setIcon(imgIconState2nds[idx]);
+	}
+
 }

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 
 import javax.swing.ImageIcon;
@@ -57,7 +58,7 @@ public class HorizontalPanel extends JPanel {
 		lblRoll.setPreferredSize(new Dimension(200, 50));
 		lblRoll.setOpaque(true); //for test
 		lblRoll.setBackground(Color.ORANGE); //for test
-		
+			
 		ImageIcon icoDraw = ImageUtil.loadImgIcon("draw.png");
 		lblDraw = new JLabel(icoDraw);
 		lblDraw.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -65,7 +66,14 @@ public class HorizontalPanel extends JPanel {
 		ImageIcon icoRedraw = ImageUtil.loadImgIcon("redraw.png");
 		lblRedraw = new JLabel(icoRedraw);
 		lblRedraw.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
+	}
+
+	public void setDrawButtonMouseListener(MouseListener listener) {
+		lblDraw.addMouseListener(listener);
+	}
+	
+	public void setRedrawButtonMouseListener(MouseListener listener) {
+		lblRedraw.addMouseListener(listener);
 	}
 	
 }

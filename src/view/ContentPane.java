@@ -32,8 +32,6 @@ public class ContentPane extends JPanel {
 	
 	private Image imgMainBackground;
 	
-	private Image imgPrize;
-	
 	Point debugPoint;
 	
 	public ContentPane() {
@@ -90,6 +88,14 @@ public class ContentPane extends JPanel {
 			e.printStackTrace();
 		}
 		pnlDraw.setOpaque(false);
+		MouseAdapter[] verticalMouseAdapters = new MouseAdapter[VerticalPanel.PRIZE_QTY];
+		for (int i = 0; i < VerticalPanel.PRIZE_QTY; i++)
+			verticalMouseAdapters[i] = new VerticalMouseListener(i);
+		
+		pnlDraw.getPnlVertical().setMouseListeners(verticalMouseAdapters);
+		
+		pnlDraw.getPnlHorizontal().setDrawButtonMouseListener(new DrawButtonMouseListener());
+		pnlDraw.getPnlHorizontal().setRedrawButtonMouseListener(new RedrawButtonMouseListener());
 		this.add(pnlDraw, BorderLayout.CENTER);
 		
 	}
@@ -120,6 +126,7 @@ public class ContentPane extends JPanel {
 		paintRect(g2, pnlDraw.getPnlInnerDraw().getBounds());
 		paintRect(g2, pnlDraw.getPnlVertical().getBounds());
 		paintRect(g2, pnlDraw.getPnlHorizontal().getBounds());
+		paintRect(g2, pnlDraw.getPnlInnerDraw().getCardPanel().getBounds());
 		g2.translate(-pnlDraw.getX(), -pnlDraw.getY());
 		
 		g2.setColor(Color.BLACK);
@@ -129,10 +136,46 @@ public class ContentPane extends JPanel {
 		}
 	}
 	
+	class VerticalMouseListener extends MouseAdapter {
+	    
+		private int idx;
+		
+		public VerticalMouseListener(int idx) {
+			super();
+			this.idx = idx;
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			VerticalPanel pnlVertical = pnlDraw.getPnlVertical();
+			pnlVertical.setButtonDown(idx);
+			
+			pnlDraw.getPnlInnerDraw().show(idx);
+			//TODO: set cardlayout
+	    }
+		
+	}
+	
+	class DrawButtonMouseListener extends MouseAdapter {
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			//TODO: add more logic
+	    }
+	}
+	
+	class RedrawButtonMouseListener extends MouseAdapter {
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			//TODO: add more logic
+	    }
+	}
+	
 	//for debug
 	public void paintRect(Graphics g, Rectangle rect) {
 		Graphics2D g2 = (Graphics2D) g;
-		g2.drawRect(rect.x + 1, rect.y + 1, rect.width - 1, rect.height - 1);
+		g2.drawRect(rect.x + 1, rect.y + 1, rect.width - 3, rect.height - 3);
 	}
 	
 
