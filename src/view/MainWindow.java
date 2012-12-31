@@ -1,8 +1,5 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 
 public class MainWindow {
@@ -19,10 +16,10 @@ public class MainWindow {
 		frame.setResizable(false);
 		frame.setUndecorated(true);
 
-		Toolkit kit = Toolkit.getDefaultToolkit();
-		Dimension screenSize = kit.getScreenSize();
-		int screenWidth = screenSize.width;
-		int screenHeight = screenSize.height;
+//		Toolkit kit = Toolkit.getDefaultToolkit();
+//		Dimension screenSize = kit.getScreenSize();
+//		int screenWidth = screenSize.width;
+//		int screenHeight = screenSize.height;
 //		frame.setSize(screenWidth, screenHeight);
 		frame.setSize(1280, 1024);
 		frame.setLocationRelativeTo(null);
@@ -35,7 +32,7 @@ public class MainWindow {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                start();
+            	//TODO:rolling the numbers.
             }
         });
 	}

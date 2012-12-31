@@ -83,7 +83,7 @@ public class ContentPane extends JPanel {
 
 		try {
 			pnlDraw = new DrawPanel(new Dimension(867, 600));
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

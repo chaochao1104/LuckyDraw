@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<candidate-lists>
+	<candidate-list name='general'>
+		<candidate>
+			<no>1234</no>
+			<domain-id>sunal4</domain-id>
+		</candidate>
+		<candidate>
+			<no>1111</no>
+			<domain-id>yiwo</domain-id>
+		</candidate>
+		<candidate>
+			<no>2344</no>
+			<domain-id>zhousu</domain-id>
+		</candidate>
+	</candidate-list>
+	
+	<candidate-list name='0-9'>
+		<candidate>
+			<no>0</no>
+		</candidate>
+		<candidate>
+			<no>1</no>
+		</candidate>
+		<candidate>
+			<no>2</no>
+		</candidate>
+		<candidate>
+			<no>3</no>
+		</candidate>
+		<candidate>
+			<no>4</no>
+		</candidate>
+		<candidate>
+			<no>5</no>
+		</candidate>
+		<candidate>
+			<no>6</no>
+		</candidate>
+		<candidate>
+			<no>7</no>
+		</candidate>
+		<candidate>
+			<no>8</no>
+		</candidate>
+		<candidate>
+			<no>9</no>
+		</candidate>
+	</candidate-list>
+
+</candidate-lists>

@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.CandidateList;
 import util.ImageUtil;
 
 public class HorizontalPanel extends JPanel {
@@ -24,6 +25,16 @@ public class HorizontalPanel extends JPanel {
 	private JLabel lblDraw;
 	
 	private JLabel lblRedraw;
+	
+	private ImageIcon icoDrawGo;
+	
+	private ImageIcon icoDrawStop;
+	
+	private boolean isDrawStateGo;
+	
+	private boolean isGoing;
+	
+	private CandidateList candidateList;
 	
 	public HorizontalPanel(Dimension preferredSize) throws FileNotFoundException {
 		super();
@@ -58,9 +69,10 @@ public class HorizontalPanel extends JPanel {
 		lblRoll.setPreferredSize(new Dimension(200, 50));
 		lblRoll.setOpaque(true); //for test
 		lblRoll.setBackground(Color.ORANGE); //for test
-			
-		ImageIcon icoDraw = ImageUtil.loadImgIcon("draw.png");
-		lblDraw = new JLabel(icoDraw);
+		
+		icoDrawStop = ImageUtil.loadImgIcon("draw-stop.png");
+		icoDrawGo = ImageUtil.loadImgIcon("draw-go.png");
+		lblDraw = new JLabel(icoDrawGo);
 		lblDraw.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		ImageIcon icoRedraw = ImageUtil.loadImgIcon("redraw.png");
@@ -76,4 +88,43 @@ public class HorizontalPanel extends JPanel {
 		lblRedraw.addMouseListener(listener);
 	}
 	
+	public void flipDrawBtnState() {
+		if (isDrawStateGo) 
+			this.lblDraw.setIcon(icoDrawStop); 
+		else 
+			this.lblDraw.setIcon(icoDrawStop);
+		
+		isDrawStateGo = !isDrawStateGo;
+	}
+	
+	private synchronized void setIsGoing(boolean isGoing) {
+		this.isGoing = isGoing;
+	}
+	
+	private synchronized boolean isGoing() {
+		return isGoing;
+	}
+	
+	public void goDraw(CandidateList candidateList) {
+		this.candidateList = candidateList;
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				if (isGoing()) {
+					
+				}
+			}
+			
+		}).start();
+	}
+	
+	class DrawRunner implements Runnable {
+
+		@Override
+		public void run() {
+			
+		}
+		
+	}
 }

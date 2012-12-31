@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<prizes>
+	<prize>
+		<name>普天同庆奖</name>
+		<img>普天同庆奖.jpg</img>
+		<description>200元交通卡</description>
+		<candidate-list>0to9</candidate-list>
+		<quantity>10</quantity>
+	</prize>
+	
+	<prize>
+		<name>一等奖</name>
+		<img>一等奖.jpg</img>
+		<description>24K 金条 100G</description>
+		<candidate-list>general</candidate-list>
+		<quantity>1</quantity>
+	</prize>
+	
+	<prize> 
+		<name>二等奖</name>
+		<img>二等奖.jpg</img>
+		<description>iphone 5 64G 3G</description>
+		<candidate-list>general</candidate-list>
+		<quantity>5</quantity>
+	</prize>
+</prizes>

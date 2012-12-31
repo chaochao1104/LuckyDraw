@@ -17,7 +17,7 @@ public class InnerDrawPanel extends JPanel {
 	
 	private static final int FONT_STYLE = Font.BOLD;
 	
-	private static final int FONT_SIZE = 21;
+	private static final int FONT_SIZE = 22;
 	
 	private JPanel[] pnlDrawWinners = new JPanel[VerticalPanel.PRIZE_QTY];
 	
@@ -55,10 +55,7 @@ public class InnerDrawPanel extends JPanel {
 		cardPanel.setPreferredSize(preferredSize);
 		cardPanel.setOpaque(false);
 		cardPanel.setLayout(new CardLayout());
-//		GridBagConstraints c = new GridBagConstraints();
-//		c.anchor = GridBagConstraints.PAGE_START;
-//		c.fill = GridBagConstraints.BOTH;
-//		c.insets = new Insets(15, 15, 15, 15);
+
 		this.add(cardPanel);
 		
 		for (int i = 0; i < VerticalPanel.PRIZE_QTY; i++) {
@@ -66,16 +63,7 @@ public class InnerDrawPanel extends JPanel {
 			panel = new JPanel();
 			panel.setOpaque(false);
 			panel.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 15));
-			
-//			Dimension preferredSize = new Dimension();
-//			preferredSize.setSize(this.getWidth() - 30, this.getHeight() - 30);
-//			this.setPreferredSize(preferredSize);
-			
-//			/*for testing ui*/
-//			panel.setLayout(new BorderLayout());
-//			JButton btn = new JButton(Integer.toString(i));
-//			panel.add(btn);
-			
+
 			pnlDrawWinners[i] = panel;
 			cardPanel.add(panel, Integer.toString(i));
 		}
@@ -97,8 +85,7 @@ public class InnerDrawPanel extends JPanel {
 		displayLabel.setForeground(Color.WHITE);
 		this.pnlDrawWinners[currentCardIdx].add(displayLabel);
 	}
-	
-	
+		
 	public JPanel getCardPanel() {
 		return cardPanel;
 	}
