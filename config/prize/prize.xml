@@ -2,15 +2,15 @@
 <prizes>
 	<prize>
 		<name>普天同庆奖</name>
-		<img>普天同庆奖.jpg</img>
+		<img>special-prize.png</img>
 		<description>200元交通卡</description>
-		<candidate-list>0to9</candidate-list>
+		<candidate-list>0-9</candidate-list>
 		<quantity>10</quantity>
 	</prize>
 	
 	<prize>
 		<name>一等奖</name>
-		<img>一等奖.jpg</img>
+		<img>1st-prize.png</img>
 		<description>24K 金条 100G</description>
 		<candidate-list>general</candidate-list>
 		<quantity>1</quantity>
@@ -18,9 +18,26 @@
 	
 	<prize> 
 		<name>二等奖</name>
-		<img>二等奖.jpg</img>
-		<description>iphone 5 64G 3G</description>
+		<img>2nd-prize.png</img>
+		<description>iphone 5 64G</description>
 		<candidate-list>general</candidate-list>
 		<quantity>5</quantity>
 	</prize>
+	
+	<prize> 
+		<name>三等奖</name>
+		<img>3rd-prize.png</img>
+		<description>iphone 4s 16G</description>
+		<candidate-list>general</candidate-list>
+		<quantity>10</quantity>
+	</prize>
+	
+	<prize> 
+		<name>四等奖</name>
+		<img>4th-prize.png</img>
+		<description>iphone 4 16G</description>
+		<candidate-list>general</candidate-list>
+		<quantity>30</quantity>
+	</prize>
+	
 </prizes>

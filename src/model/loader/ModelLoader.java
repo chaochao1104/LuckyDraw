@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import model.Candidate;
@@ -66,7 +67,10 @@ public class ModelLoader {
 				String domainId = domainIdNode == null ? "" : domainIdNode.getText();
 				candidates.add(new Candidate(no, domainId));
 			}
+			
+			Collections.shuffle(candidates);
 			candidateList.setCandidateList(candidates);
+			
 			result.add(candidateList);
 		}
 		

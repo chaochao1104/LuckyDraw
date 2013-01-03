@@ -32,7 +32,7 @@ public class MainWindow {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-            	//TODO:rolling the numbers.
+            	MainWindow.start();
             }
         });
 	}

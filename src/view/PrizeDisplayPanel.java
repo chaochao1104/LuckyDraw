@@ -24,6 +24,7 @@ public class PrizeDisplayPanel extends JPanel {
 	
 	public void setImg(Image img) {
 		this.img = img;
+		repaint();
 	}
 	
 	@Override

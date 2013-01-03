@@ -3,18 +3,11 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import javax.swing.JPanel;
 
-import model.CandidateList;
-import model.Prize;
 import model.exception.InitModelError;
 import model.exception.InitUIError;
-import model.loader.ModelLoader;
-
-import org.dom4j.DocumentException;
 
 public class DrawPanel extends JPanel {
 	
@@ -25,10 +18,6 @@ public class DrawPanel extends JPanel {
 	private VerticalPanel pnlVertical;
 	
 	private HorizontalPanel pnlHorizontal;
-	
-	private List<Prize> prizes;
-	
-	private List<CandidateList> candidateLists;
 	
 	public DrawPanel(Dimension preferredSize) throws InitUIError, InitModelError {
 		super();
@@ -47,17 +36,6 @@ public class DrawPanel extends JPanel {
 		this.add(pnlInnerDraw, BorderLayout.CENTER);
 		this.add(pnlVertical, BorderLayout.EAST);		
 		this.add(pnlHorizontal, BorderLayout.SOUTH);
-		
-		try {
-			initModels();
-		} catch (Exception e) {
-			throw new InitModelError(e.getMessage());
-		}
-	}
-
-	private void initModels() throws UnsupportedEncodingException, FileNotFoundException, DocumentException {
-		prizes = ModelLoader.loadPrizes();
-		candidateLists = ModelLoader.loadCandidates();
 	}
 	
 	public InnerDrawPanel getPnlInnerDraw() {
