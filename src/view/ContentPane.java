@@ -22,8 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.Absentee;
-import model.CandidateAdapter;
 import model.Candidate;
+import model.CandidateAdapter;
 import model.CandidateList;
 import model.Outcome;
 import model.OutcomeVisitor;
@@ -103,14 +103,13 @@ public class ContentPane extends JPanel {
 	}
 
 	private void initModels() {
-		try {
-			imgMainBackground = ImageUtil.loadImg("main-background.jpg");
-		} catch (FileNotFoundException e) {
-			// TODO
-			e.printStackTrace();
-		}
+
 		try {
 			prizes = ModelPersistenter.loadPrizes();
+			
+			if (prizes == null || prizes.isEmpty())
+				throw new Exception();
+			
 			for (Prize prize : prizes) {
 				String imgName = prize.getImgName();
 				Image prizeImg = ImageUtil.loadImg(imgName);
@@ -127,6 +126,9 @@ public class ContentPane extends JPanel {
 			for (CandidateList candidateList : ModelPersistenter.loadCandidates())
 				nameIndexedCandidateLists.put(candidateList.getName(), candidateList);
 			
+			if (nameIndexedCandidateLists.isEmpty())
+				throw new Exception();
+			
 			currPrize = prizes.get(0);
 			candidateList = nameIndexedCandidateLists.get(currPrize.getCandidateListName());
 		} catch (Exception e) {
@@ -136,7 +138,10 @@ public class ContentPane extends JPanel {
 		
 		try {
 			absentees = ModelPersistenter.loadAbsentees();
+			if (absentees == null || absentees.isEmpty())
+				throw new Exception();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -233,6 +238,13 @@ public class ContentPane extends JPanel {
 			}
 			
 		});
+		
+		try {
+			imgMainBackground = ImageUtil.loadImg("main-background.jpg");
+		} catch (FileNotFoundException e) {
+			// TODO
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -337,8 +349,16 @@ public class ContentPane extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			pnlDraw.getPnlInnerDraw().removeLastWinner(); //To re-add into candidateList or not?
+			String winnerNo = pnlDraw.getPnlInnerDraw().removeLastWinner(); //To re-add into candidateList or not?
 			pnlDraw.getPnlHorizontal().clearRollingLabel();
+			outcome.remove(winnerNo.substring(0, winnerNo.indexOf(' ')));
+			
+			try {
+				ModelPersistenter.persistOutcome(outcome);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
