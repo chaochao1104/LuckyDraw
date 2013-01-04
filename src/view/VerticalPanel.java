@@ -57,7 +57,7 @@ public class VerticalPanel extends JPanel {
 			c.gridy++;
 		}
 		
-		setButtonDown(0);
+		setOnlyButtonDown(0);
 	}
 	
 	private void initComponents() throws FileNotFoundException {
@@ -96,7 +96,7 @@ public class VerticalPanel extends JPanel {
 		}
 	}
 	
-	public void setButtonDown(int idx) {
+	public void setOnlyButtonDown(int idx) {
 		if (idx < 0 || idx > PRIZE_QTY - 1)
 			throw new IllegalArgumentException();
 		

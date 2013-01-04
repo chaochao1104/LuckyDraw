@@ -13,6 +13,38 @@
 			<no>2344</no>
 			<domain-id>zhousu</domain-id>
 		</candidate>
+		<candidate>
+			<no>3</no>
+			<domain-id>yuju</domain-id>
+		</candidate>
+		<candidate>
+			<no>455</no>
+			<domain-id>hanno</domain-id>
+		</candidate>
+		<candidate>
+			<no>4675</no>
+			<domain-id>liuca2</domain-id>
+		</candidate>
+		<candidate>
+			<no>5877</no>
+			<domain-id>maoma</domain-id>
+		</candidate>
+		<candidate>
+			<no>95</no>
+			<domain-id>feito</domain-id>
+		</candidate>
+		<candidate>
+			<no>8956</no>
+			<domain-id>wenvi</domain-id>
+		</candidate>
+		<candidate>
+			<no>0586</no>
+			<domain-id>xuar</domain-id>
+		</candidate>
+		<candidate>
+			<no>856</no>
+			<domain-id>zhangka2</domain-id>
+		</candidate>
 	</candidate-list>
 	
 	<candidate-list name='0-9'>

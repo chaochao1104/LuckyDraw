@@ -14,21 +14,12 @@ public class InnerDrawPanel extends JPanel {
 	
 	private static final long serialVersionUID = 5079948721745142011L;
 	
-	private static final String FONT_NAME = "Comic Sans MS";
-	
-	private static final int FONT_STYLE = Font.BOLD;
-	
-	private static final int FONT_SIZE = 22;
-
-	private Font displayLabelFont;
-	
 	private JPanel[] pnlDrawWinners = new JPanel[VerticalPanel.PRIZE_QTY];
 	
 	private JPanel pnlCard = new JPanel(true);
 	
 	private int currentCardIdx = 0;
-	
-	
+		
 	public InnerDrawPanel(Dimension preferredSize) {
 		super(true);
 		this.setPreferredSize(preferredSize);
@@ -37,20 +28,9 @@ public class InnerDrawPanel extends JPanel {
 		initComponent();
 		
 		this.show(currentCardIdx);
-		
-		//for testing
-//		addDisplayText("022 Woody Yi");
-//		addDisplayText("2901 Alex Sun");
-//		addDisplayText("355 Justin Yu");
-//		addDisplayText("356 Martin Mao");
-//		addDisplayText("3356 Mars Huang");
-//		addDisplayText("5487 Noble Han");
-//		addDisplayText("87 Vincent Wen");
-//		addDisplayText("546 Carl Liu");
 	}
 	
 	private void initComponent() {
-		this.displayLabelFont = new Font(FONT_NAME, FONT_STYLE, FONT_SIZE);
 		Dimension preferredSize = getPreferredSize();
 		preferredSize.height -= 10; 
 		preferredSize.width -= 10; 
@@ -81,17 +61,18 @@ public class InnerDrawPanel extends JPanel {
 		this.currentCardIdx = idx;
 	}
 	
-	public void addDisplayText(String text) {
+	public void addWinnerToBoard(String displayTxt, String tip, Font font, Color color) {
 		JLabel displayLabel = new JLabel();
-		displayLabel.setFont(displayLabelFont);
-		displayLabel.setForeground(Color.WHITE);
-		displayLabel.setText(text);
+		displayLabel.setFont(font);
+		displayLabel.setForeground(color);
+		displayLabel.setText(displayTxt);
+		displayLabel.setToolTipText(tip);
 		pnlDrawWinners[currentCardIdx].add(displayLabel);
-		displayLabel.revalidate();
+		displayLabel.revalidate(); //to show immediately.
 		displayLabel.repaint();
 	}
 	
-	public String removeLastDisplayText() {
+	public String removeLastWinner() {
 		JPanel pnl = pnlDrawWinners[currentCardIdx];
 		final int lastCompIdx = pnl.getComponentCount() - 1;
 		
@@ -103,6 +84,10 @@ public class InnerDrawPanel extends JPanel {
 		pnl.revalidate();
 		pnl.repaint();
 		return lblLastWinner.getText();
+	}
+	
+	public String[] getWinnerGroup() {
+		return null;
 	}
 	
 	public JPanel getCardPanel() {

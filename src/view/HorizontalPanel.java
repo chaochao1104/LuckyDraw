@@ -38,9 +38,9 @@ public class HorizontalPanel extends JPanel {
 	
 	private ImageIcon icoDrawStop;
 	
-	private boolean isDrawStateGo;
+	private boolean isDrawStateGo = true;
 	
-	private boolean isGoing;
+	private boolean isRolling;
 	
 	private Candidate winner;
 	
@@ -103,25 +103,27 @@ public class HorizontalPanel extends JPanel {
 		if (isDrawStateGo) 
 			this.lblDraw.setIcon(icoDrawStop); 
 		else 
-			this.lblDraw.setIcon(icoDrawStop);
+			this.lblDraw.setIcon(icoDrawGo);
 		
+		lblDraw.revalidate();
+		lblDraw.repaint();
 		isDrawStateGo = !isDrawStateGo;
 	}
 	
-	public synchronized boolean isGoing() {
-		return isGoing;
+	public synchronized boolean isRolling() {
+		return isRolling;
 	}
 	
-	public synchronized void stopGoing() {
-		this.isGoing = false;
+	public synchronized void stopRolling() {
+		this.isRolling = false;
 	}
 	
-	public synchronized Thread startGoing(CandidateList candidateList) {
-		if (isGoing()) return null;
+	public synchronized Thread startRolling(CandidateList candidateList) {
+		if (isRolling()) return null;
 
 		Thread ret = new Thread(new DrawRunner(candidateList));
 		ret.start();
-		this.isGoing = true;
+		this.isRolling = true;
 		
 		return ret;
 	}
@@ -146,11 +148,11 @@ public class HorizontalPanel extends JPanel {
 		public void run() {
 						
 			while(true) {
-				if (!isGoing()) break;
+				if (!isRolling()) break;
 				
 				for (Candidate candidate : candidateList.getCandidateList()) {
 					
-					if (!isGoing()) { 
+					if (!isRolling()) { 
 						break;
 					}
 					
@@ -159,7 +161,7 @@ public class HorizontalPanel extends JPanel {
 					lblRoll.setText(no);
 										
 					try {
-						Thread.sleep(30);
+						Thread.sleep(16);
 					} catch(Exception e) {
 						e.printStackTrace();
 					}

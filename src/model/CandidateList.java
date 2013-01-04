@@ -10,7 +10,30 @@ public class CandidateList {
 
 	public boolean remove(Candidate toRemove) {
 		return candidateList.remove(toRemove);
-	} 
+	}
+	
+	public Candidate removeByCandidateNo(String no) {
+		int idxToRemove = -1;
+		for (int i = 0; i < candidateList.size(); i++) {
+			if (candidateList.get(i).getNo().equals(no)) {
+				idxToRemove = i;
+				break;
+			}
+		}
+		
+		if (idxToRemove > -1)
+			return candidateList.remove(idxToRemove);
+		
+		return null;
+	}
+	
+	public Candidate findCandidateByNo(String no) {
+		for (Candidate candidate : candidateList)
+			if (candidate.getNo().equals(no))
+				return candidate;
+		
+		return null;
+	}
 	
 	public boolean add(Candidate toAdd) {
 		return candidateList.add(toAdd);
