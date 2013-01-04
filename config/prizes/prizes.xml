@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <prizes>
 	<prize>
-		<name>普天同庆奖</name>
+		<name>特等奖</name>
 		<img>special-prize.png</img>
 		<description>200元交通卡</description>
 		<candidate-list>0-9</candidate-list>

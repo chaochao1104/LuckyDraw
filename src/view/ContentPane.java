@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.Absentee;
-import model.AbsenteeAdapter;
+import model.CandidateAdapter;
 import model.Candidate;
 import model.CandidateList;
 import model.Outcome;
@@ -44,7 +44,7 @@ public class ContentPane extends JPanel {
 	
 	private static final Font ABSENT_WINNER_FONT = new Font("Comic Sans MS", Font.ITALIC, 22);
 	
-	private static final Color ABSENT_WINNER_FONT_COLOR = Color.LIGHT_GRAY;
+	private static final Color ABSENT_WINNER_FONT_COLOR = Color.CYAN;
 	
 	private static final String ABSENT_TIP = "º”∞‡÷–...";
 	
@@ -206,8 +206,8 @@ public class ContentPane extends JPanel {
 			e.printStackTrace();
 		}
 		pnlDraw.setOpaque(false);
-		final MouseAdapter[] verticalMouseAdapters = new MouseAdapter[VerticalPanel.PRIZE_QTY];
-		for (int i = 0; i < VerticalPanel.PRIZE_QTY; i++)
+		final MouseAdapter[] verticalMouseAdapters = new MouseAdapter[VerticalPanel.PRIZE_CATEGORY_QTY];
+		for (int i = 0; i < VerticalPanel.PRIZE_CATEGORY_QTY; i++)
 			verticalMouseAdapters[i] = new VerticalMouseListener(i);
 
 		pnlDraw.getPnlVertical().setMouseListeners(verticalMouseAdapters);
@@ -237,7 +237,7 @@ public class ContentPane extends JPanel {
 	}
 
 	private void addWinnerToBoard(Candidate winner) {
-		if (!absentees.contains(new AbsenteeAdapter(winner)))
+		if (!absentees.contains(new CandidateAdapter(winner)))
 			pnlDraw.getPnlInnerDraw().addWinnerToBoard(winner.toString(), "", WINNER_FONT, WINNER_FONT_COLOR);
 		else 
 			pnlDraw.getPnlInnerDraw().addWinnerToBoard(winner.toString(), ABSENT_TIP, ABSENT_WINNER_FONT, ABSENT_WINNER_FONT_COLOR);

@@ -14,7 +14,7 @@ public class InnerDrawPanel extends JPanel {
 	
 	private static final long serialVersionUID = 5079948721745142011L;
 	
-	private JPanel[] pnlDrawWinners = new JPanel[VerticalPanel.PRIZE_QTY];
+	private JPanel[] pnlDrawWinners = new JPanel[VerticalPanel.PRIZE_CATEGORY_QTY];
 	
 	private JPanel pnlCard = new JPanel(true);
 	
@@ -40,7 +40,7 @@ public class InnerDrawPanel extends JPanel {
 
 		this.add(pnlCard);
 		
-		for (int i = 0; i < VerticalPanel.PRIZE_QTY; i++) {
+		for (int i = 0; i < VerticalPanel.PRIZE_CATEGORY_QTY; i++) {
 			JPanel panel = new JPanel(true);
 			panel = new JPanel();
 			panel.setOpaque(false);
@@ -53,7 +53,7 @@ public class InnerDrawPanel extends JPanel {
 	}
 	
 	public void show(int idx) {
-		if (idx < 0 || idx > VerticalPanel.PRIZE_QTY) 
+		if (idx < 0 || idx > VerticalPanel.PRIZE_CATEGORY_QTY) 
 			throw new IllegalArgumentException();
 		
 		CardLayout cardLayout = (CardLayout) this.pnlCard.getLayout();
@@ -84,10 +84,6 @@ public class InnerDrawPanel extends JPanel {
 		pnl.revalidate();
 		pnl.repaint();
 		return lblLastWinner.getText();
-	}
-	
-	public String[] getWinnerGroup() {
-		return null;
 	}
 	
 	public JPanel getCardPanel() {

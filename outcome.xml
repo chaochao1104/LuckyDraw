@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<prizes>
+  <prize name="特等奖">
+    <winner no="9"/>
+  </prize>
+  <prize name="一等奖">
+    <winner no="0633"/>
+    <winner no="2913"/>
+    <winner no="2966"/>
+    <winner no="2979"/>
+    <winner no="0824"/>
+    <winner no="0135"/>
+    <winner no="1608"/>
+    <winner no="1227"/>
+    <winner no="1963"/>
+    <winner no="0573"/>
+    <winner no="1174"/>
+    <winner no="0366"/>
+    <winner no="0124"/>
+    <winner no="1403"/>
+    <winner no="2892"/>
+    <winner no="1250"/>
+    <winner no="2076"/>
+    <winner no="1057"/>
+    <winner no="1289"/>
+    <winner no="0992"/>
+    <winner no="0913"/>
+    <winner no="2508"/>
+    <winner no="1966"/>
+    <winner no="2286"/>
+    <winner no="1511"/>
+    <winner no="1598"/>
+    <winner no="2146"/>
+    <winner no="1264"/>
+    <winner no="1123"/>
+    <winner no="2893"/>
+    <winner no="2627"/>
+    <winner no="1729"/>
+    <winner no="2177"/>
+    <winner no="0246"/>
+    <winner no="0639"/>
+    <winner no="0891"/>
+  </prize>
+</prizes>

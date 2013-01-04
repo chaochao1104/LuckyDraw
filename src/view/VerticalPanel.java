@@ -17,7 +17,7 @@ public class VerticalPanel extends JPanel {
 
 	private static final long serialVersionUID = 2724873362749474725L;
 
-	public static final int PRIZE_QTY = 5;
+	public static final int PRIZE_CATEGORY_QTY = 5;
 	
 	private JLabel[] lblPrizes;
 	
@@ -88,7 +88,7 @@ public class VerticalPanel extends JPanel {
 	}
 	
 	public void setMouseListeners(MouseListener[] mouseListeners) {
-		if (mouseListeners.length != PRIZE_QTY)
+		if (mouseListeners.length != PRIZE_CATEGORY_QTY)
 			throw new IllegalArgumentException();
 		
 		for (int i = 0; i < mouseListeners.length; i++) {
@@ -97,7 +97,7 @@ public class VerticalPanel extends JPanel {
 	}
 	
 	public void setOnlyButtonDown(int idx) {
-		if (idx < 0 || idx > PRIZE_QTY - 1)
+		if (idx < 0 || idx > PRIZE_CATEGORY_QTY - 1)
 			throw new IllegalArgumentException();
 		
 		for (int i = 0; i < lblPrizes.length; i++)
