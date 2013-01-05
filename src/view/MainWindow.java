@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 public class MainWindow {
 	
-	private static Logger logger = Logger.getLogger(ContentPane.class.getName());
+	private static Logger logger = Logger.getLogger(MainWindow.class.getName());
 	
 	public MainWindow() {}
 	
