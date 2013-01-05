@@ -142,8 +142,8 @@ public class HorizontalPanel extends JPanel {
 		this.lblRoll.setText("");
 	}
 	
-	public void setRedrawBtnVisible(boolean visible) {
-		this.lblRedraw.setVisible(visible);
+	public void setRedrawBtnEnabled(boolean visible) {
+		lblRedraw.setEnabled(visible);
 	}
 	
 	class DrawRunner implements Runnable {

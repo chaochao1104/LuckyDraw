@@ -284,7 +284,7 @@ public class ContentPane extends JPanel {
 			pnlDraw.getPnlHorizontal().stopRolling();
 			pnlDraw.getPnlHorizontal().clearRollingLabel();
 			
-			pnlDraw.getPnlHorizontal().setRedrawBtnVisible(currPrize.needRedraw());
+			pnlDraw.getPnlHorizontal().setRedrawBtnEnabled(currPrize.needRedraw());
 			
 			pnlPrizeDisplay.setImg(prizeImg);
 		}
