@@ -6,9 +6,6 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JPanel;
 
-import model.exception.InitModelError;
-import model.exception.InitUIError;
-
 public class DrawPanel extends JPanel {
 	
 	private static final long serialVersionUID = -6985725399213380053L;
@@ -19,19 +16,15 @@ public class DrawPanel extends JPanel {
 	
 	private HorizontalPanel pnlHorizontal;
 	
-	public DrawPanel(Dimension preferredSize) throws InitUIError, InitModelError {
+	public DrawPanel(Dimension preferredSize) throws FileNotFoundException {
 		super();
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(preferredSize);
 		
 		pnlInnerDraw = new InnerDrawPanel(new Dimension(preferredSize.width - 170, preferredSize.height - 70));
-				
-		try {
-			pnlVertical = new VerticalPanel(new Dimension(170, preferredSize.height));
-			pnlHorizontal = new HorizontalPanel(new Dimension(preferredSize.width, 70));
-		} catch(FileNotFoundException e) {
-			throw new InitUIError(e.getMessage());
-		}	
+		
+		pnlVertical = new VerticalPanel(new Dimension(170, preferredSize.height));
+		pnlHorizontal = new HorizontalPanel(new Dimension(preferredSize.width, 70));
 		
 		this.add(pnlInnerDraw, BorderLayout.CENTER);
 		this.add(pnlVertical, BorderLayout.EAST);		

@@ -10,6 +10,7 @@
 	
 	<prize>
 		<name>一等奖</name>
+		<need-redraw>true</need-redraw>
 		<img>1st-prize.png</img>
 		<description>24K 金条 100G</description>
 		<candidate-list>general</candidate-list>

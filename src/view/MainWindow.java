@@ -3,7 +3,11 @@ package view;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import org.apache.log4j.Logger;
+
 public class MainWindow {
+	
+	private static Logger logger = Logger.getLogger(ContentPane.class.getName());
 	
 	public MainWindow() {}
 	
@@ -11,7 +15,14 @@ public class MainWindow {
 		JFrame frame = new JFrame("Lucky Draw");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		ContentPane contentPane = new ContentPane();
+		ContentPane contentPane = null;
+		
+		try {
+			contentPane = new ContentPane();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
 		contentPane.setOpaque(true);
 		frame.setContentPane(contentPane);
 		frame.setResizable(false);
@@ -23,7 +34,7 @@ public class MainWindow {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		frame.setVisible(true);
@@ -34,7 +45,12 @@ public class MainWindow {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
         	
             public void run() {
-            	MainWindow.start();
+            	try {
+            		MainWindow.start();	
+            	} catch (Exception e) {
+            		logger.error(e.getMessage());
+            	}
+            	
             }
             
         });

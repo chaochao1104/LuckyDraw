@@ -13,6 +13,8 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +30,14 @@ import model.CandidateList;
 import model.Outcome;
 import model.OutcomeVisitor;
 import model.Prize;
-import model.loader.ModelPersistenter;
+import model.exception.NoCandidateListFoundError;
+import model.exception.NoPrizeFoundError;
+import model.persistenter.ModelPersistenter;
 
+import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 
 import util.ImageUtil;
-
 public class ContentPane extends JPanel {
 
 	private static final long serialVersionUID = 5744529722826165904L;
@@ -47,6 +51,8 @@ public class ContentPane extends JPanel {
 	private static final Color ABSENT_WINNER_FONT_COLOR = Color.CYAN;
 	
 	private static final String ABSENT_TIP = "加班中...";
+	
+	private static Logger logger = Logger.getLogger(ContentPane.class.getName());
 	
 	private PrizeDisplayPanel pnlPrizeDisplay;
 
@@ -80,7 +86,7 @@ public class ContentPane extends JPanel {
 	
 	Point debugPoint;
 
-	public ContentPane() {
+	public ContentPane() throws Exception {
 		super();
 		initModels();
 		initComponents();
@@ -102,59 +108,41 @@ public class ContentPane extends JPanel {
 		});
 	}
 
-	private void initModels() {
+	private void initModels() throws UnsupportedEncodingException, FileNotFoundException, DocumentException, NoPrizeFoundError, NoCandidateListFoundError {
 
-		try {
-			prizes = ModelPersistenter.loadPrizes();
-			
-			if (prizes == null || prizes.isEmpty())
-				throw new Exception();
-			
-			for (Prize prize : prizes) {
-				String imgName = prize.getImgName();
-				Image prizeImg = ImageUtil.loadImg(imgName);
-				nameIndexedPrizeImgs.put(imgName, prizeImg);
-				
-				nameIndexedPrizes.put(prize.getName(), prize);
-			}
-		} catch (Exception e) {
-			// TODO
-			e.printStackTrace();
-		}
+		prizes = ModelPersistenter.loadPrizes();
 		
-		try {
-			for (CandidateList candidateList : ModelPersistenter.loadCandidates())
-				nameIndexedCandidateLists.put(candidateList.getName(), candidateList);
-			
-			if (nameIndexedCandidateLists.isEmpty())
-				throw new Exception();
-			
-			currPrize = prizes.get(0);
-			candidateList = nameIndexedCandidateLists.get(currPrize.getCandidateListName());
-		} catch (Exception e) {
-			// TODO
-			e.printStackTrace();
-		}
+		if (prizes == null || prizes.isEmpty())
+			throw new NoPrizeFoundError();
 		
-		try {
-			absentees = ModelPersistenter.loadAbsentees();
-			if (absentees == null || absentees.isEmpty())
-				throw new Exception();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (Prize prize : prizes) {
+			String imgName = prize.getImgName();
+			Image prizeImg = ImageUtil.loadImg(imgName);
+			nameIndexedPrizeImgs.put(imgName, prizeImg);
+			
+			nameIndexedPrizes.put(prize.getName(), prize);
 		}
+
+		for (CandidateList candidateList : ModelPersistenter.loadCandidates())
+			nameIndexedCandidateLists.put(candidateList.getName(), candidateList);
 		
-	
+		if (nameIndexedCandidateLists.isEmpty())
+			throw new NoCandidateListFoundError();
+		
+		currPrize = prizes.get(0);
+		candidateList = nameIndexedCandidateLists.get(currPrize.getCandidateListName());
+		
+		absentees = ModelPersistenter.loadAbsentees();
+		
 		boolean isOutcomeExisting = true;
 		try {
 			outcome = ModelPersistenter.loadOutcome();
 		} catch (FileNotFoundException e1) {
 			isOutcomeExisting = false;
 		} catch (DocumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			throw e1;
 		}
+		
 		if (isOutcomeExisting) {
 			final String[] options = {"继续上次", "重新开始"};
 			int response=JOptionPane.showOptionDialog(
@@ -185,7 +173,7 @@ public class ContentPane extends JPanel {
 		
 	}
 
-	private void initComponents() {
+	private void initComponents() throws FileNotFoundException {
 
 		setLayout(new BorderLayout(10, 20));
 
@@ -203,13 +191,9 @@ public class ContentPane extends JPanel {
 		pnlPrizeDisplay.setImg(nameIndexedPrizeImgs.get(currPrize.getImgName()));
 
 		this.add(pnlPrizeDisplay, BorderLayout.WEST);
-
-		try {
-			pnlDraw = new DrawPanel(new Dimension(867, 600));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
+		pnlDraw = new DrawPanel(new Dimension(867, 600));
+		
 		pnlDraw.setOpaque(false);
 		final MouseAdapter[] verticalMouseAdapters = new MouseAdapter[VerticalPanel.PRIZE_CATEGORY_QTY];
 		for (int i = 0; i < VerticalPanel.PRIZE_CATEGORY_QTY; i++)
@@ -239,13 +223,8 @@ public class ContentPane extends JPanel {
 			
 		});
 		
-		try {
-			imgMainBackground = ImageUtil.loadImg("main-background.jpg");
-		} catch (FileNotFoundException e) {
-			// TODO
-			e.printStackTrace();
-		}
-		
+		verticalMouseAdapters[VerticalPanel.PRIZE_CATEGORY_QTY - 1].mouseClicked(null);
+		imgMainBackground = ImageUtil.loadImg("main-background.jpg");
 	}
 
 	private void addWinnerToBoard(Candidate winner) {
@@ -305,6 +284,8 @@ public class ContentPane extends JPanel {
 			pnlDraw.getPnlHorizontal().stopRolling();
 			pnlDraw.getPnlHorizontal().clearRollingLabel();
 			
+			pnlDraw.getPnlHorizontal().setRedrawBtnVisible(currPrize.needRedraw());
+			
 			pnlPrizeDisplay.setImg(prizeImg);
 		}
 
@@ -324,7 +305,7 @@ public class ContentPane extends JPanel {
 				try {
 					drawThread.join(); //wait for roll thread to stop.
 				} catch (InterruptedException e1) {
-					e1.printStackTrace();
+					logger.error(e1.getMessage());
 				}
 				drawThread = null;
 				Candidate winner = pnlDraw.getPnlHorizontal().getWinner();
@@ -336,10 +317,10 @@ public class ContentPane extends JPanel {
 
 				try {
 					ModelPersistenter.persistOutcome(outcome);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (IOException e2) {
+					logger.error(e2.getMessage());
 				}
+
 			}
 			
 		}
@@ -351,13 +332,14 @@ public class ContentPane extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			String winnerNo = pnlDraw.getPnlInnerDraw().removeLastWinner(); //To re-add into candidateList or not?
 			pnlDraw.getPnlHorizontal().clearRollingLabel();
-			outcome.remove(winnerNo.substring(0, winnerNo.indexOf(' ')));
+			int idx = winnerNo.indexOf(' ');
+			if (-1 == idx) return;
+			outcome.remove(winnerNo.substring(0, idx));
 			
 			try {
 				ModelPersistenter.persistOutcome(outcome);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			} catch (IOException e2) {
+				logger.error(e2.getMessage());
 			}
 		}
 	}

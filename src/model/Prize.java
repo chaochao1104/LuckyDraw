@@ -8,11 +8,13 @@ public class Prize {
 	
 	private String imgName;
 	
-	private String deccription;
+	private String deccription;//no use so far.
 	
 	private String candidateListName;
 	
-	private int quantity;
+	private int quantity;//no use so far.
+	
+	private boolean needRedraw;
 
 	public String getName() {
 		return name;
@@ -54,6 +56,14 @@ public class Prize {
 		this.candidateListName = candidateListName;
 	}
 
+	public boolean needRedraw() {
+		return needRedraw;
+	}
+
+	public void setNeedRedraw(boolean needRedraw) {
+		this.needRedraw = needRedraw;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -66,6 +76,7 @@ public class Prize {
 				+ ((deccription == null) ? 0 : deccription.hashCode());
 		result = prime * result + ((imgName == null) ? 0 : imgName.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + (needRedraw ? 1231 : 1237);
 		result = prime * result + quantity;
 		return result;
 	}
@@ -99,9 +110,13 @@ public class Prize {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (needRedraw != other.needRedraw)
+			return false;
 		if (quantity != other.quantity)
 			return false;
 		return true;
 	}
+
+
 		
 }

@@ -16,6 +16,9 @@ import javax.swing.JPanel;
 
 import model.Candidate;
 import model.CandidateList;
+
+import org.apache.log4j.Logger;
+
 import util.ImageUtil;
 
 public class HorizontalPanel extends JPanel {
@@ -27,6 +30,8 @@ public class HorizontalPanel extends JPanel {
 	private static final int FONT_STYLE = Font.BOLD;
 	
 	private static final int FONT_SIZE = 70;
+	
+	private static Logger logger = Logger.getLogger(HorizontalPanel.class.getName());
 
 	private JLabel lblRoll;
 	
@@ -89,6 +94,7 @@ public class HorizontalPanel extends JPanel {
 		ImageIcon icoRedraw = ImageUtil.loadImgIcon("redraw.png");
 		lblRedraw = new JLabel(icoRedraw);
 		lblRedraw.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 	}
 
 	public void setDrawButtonMouseListener(MouseListener listener) {
@@ -136,6 +142,10 @@ public class HorizontalPanel extends JPanel {
 		this.lblRoll.setText("");
 	}
 	
+	public void setRedrawBtnVisible(boolean visible) {
+		this.lblRedraw.setVisible(visible);
+	}
+	
 	class DrawRunner implements Runnable {
 
 		private CandidateList candidateList;
@@ -163,7 +173,7 @@ public class HorizontalPanel extends JPanel {
 					try {
 						Thread.sleep(16);
 					} catch(Exception e) {
-						e.printStackTrace();
+						logger.error(e.getMessage());
 					}
 				}
 			}

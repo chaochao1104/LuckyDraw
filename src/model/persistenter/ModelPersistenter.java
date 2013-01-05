@@ -1,9 +1,10 @@
-package model.loader;
+package model.persistenter;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -42,14 +43,16 @@ public class ModelPersistenter {
 		List<Prize> ret = new ArrayList<Prize>();
 		List<Node> nodes = doc.selectNodes("/prizes/prize");
 		for (Node node : nodes) {
-			Prize award = new Prize();
-			award.setName(node.selectSingleNode("name").getText());
-			award.setCandidateListName((node.selectSingleNode("candidate-list").getText()));
-			award.setImgName(node.selectSingleNode("img").getText());
-			award.setDeccription(node.selectSingleNode("description").getText());
-			award.setQuantity(Integer.parseInt(node.selectSingleNode("quantity").getText()));
-				
-			ret.add(award);
+			Prize prize = new Prize();
+			prize.setName(node.selectSingleNode("name").getText());
+			prize.setCandidateListName((node.selectSingleNode("candidate-list").getText()));
+			prize.setImgName(node.selectSingleNode("img").getText());
+			prize.setDeccription(node.selectSingleNode("description").getText());
+			prize.setQuantity(Integer.parseInt(node.selectSingleNode("quantity").getText()));
+			Node needRedrawNode = node.selectSingleNode("need-redraw");
+			String needRedraw = needRedrawNode == null? "false" : needRedrawNode.getText();
+			prize.setNeedRedraw("true".equalsIgnoreCase(needRedraw));
+			ret.add(prize);
 		}
 		
 		return ret;
@@ -105,7 +108,7 @@ public class ModelPersistenter {
 		return ret;
 	}
 	
-	public static void persistOutcome(Outcome outcome) throws Exception {
+	public static void persistOutcome(Outcome outcome) throws IOException  {
 		final Document document = DocumentHelper.createDocument();
 		final Element prizesElement = document.addElement("prizes");
 		
