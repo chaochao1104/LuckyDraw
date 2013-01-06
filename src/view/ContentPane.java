@@ -157,7 +157,6 @@ public class ContentPane extends JPanel {
 			if(response == 0) {
 				outcome.traverse(new OutcomeVisitor() {
 
-					@Override
 					public void visit(String prize, String winnerNo) {
 						Prize prz = nameIndexedPrizes.get(prize);
 						CandidateList candidateList = nameIndexedCandidateLists.get(prz.getCandidateListName());
@@ -209,7 +208,6 @@ public class ContentPane extends JPanel {
 
 		outcome.traverse(new OutcomeVisitor() {
 
-			@Override
 			public void visit(String prize, String winnerNo) {
 				Prize prz = nameIndexedPrizes.get(prize);
 				int idx = prizes.indexOf(prz);

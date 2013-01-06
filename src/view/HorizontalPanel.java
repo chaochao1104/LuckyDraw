@@ -154,7 +154,6 @@ public class HorizontalPanel extends JPanel {
 			this.candidateList = candidateList;
 		}
 	
-		@Override
 		public void run() {
 						
 			while(true) {
