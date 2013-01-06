@@ -49,6 +49,8 @@ public class HorizontalPanel extends JPanel {
 	
 	private Candidate winner;
 	
+	private MouseListener redrawMouseListener;
+	
 	public HorizontalPanel(Dimension preferredSize) throws FileNotFoundException {
 		super(true);
 		this.setPreferredSize(preferredSize);
@@ -102,6 +104,7 @@ public class HorizontalPanel extends JPanel {
 	}
 	
 	public void setRedrawButtonMouseListener(MouseListener listener) {
+		redrawMouseListener = listener;
 		lblRedraw.addMouseListener(listener);
 	}
 	
@@ -144,6 +147,9 @@ public class HorizontalPanel extends JPanel {
 	
 	public void setRedrawBtnEnabled(boolean visible) {
 		lblRedraw.setEnabled(visible);
+		lblRedraw.removeMouseListener(redrawMouseListener);
+		if (visible)
+			lblRedraw.addMouseListener(redrawMouseListener);
 	}
 	
 	class DrawRunner implements Runnable {
