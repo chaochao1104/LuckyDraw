@@ -114,7 +114,6 @@ public class ModelPersistenter {
 		
 		outcome.traverse(new OutcomeVisitor() {
 
-			@Override
 			public void visit(String prize, String winnerNo) {
 				Node prizeNode = document.selectSingleNode("/prizes/prize[@name='" + prize + "']");
 				if (prizeNode == null) {
