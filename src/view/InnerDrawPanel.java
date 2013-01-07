@@ -9,6 +9,7 @@ import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class InnerDrawPanel extends JPanel {
 	
@@ -32,8 +33,8 @@ public class InnerDrawPanel extends JPanel {
 	
 	private void initComponent() {
 		Dimension preferredSize = getPreferredSize();
-		preferredSize.height -= 10; 
-		preferredSize.width -= 10; 
+		preferredSize.height -= 10;
+		preferredSize.width -= 10;
 		pnlCard.setPreferredSize(preferredSize);
 		pnlCard.setOpaque(false);
 		pnlCard.setLayout(new CardLayout());
@@ -41,13 +42,24 @@ public class InnerDrawPanel extends JPanel {
 		this.add(pnlCard);
 		
 		for (int i = 0; i < VerticalPanel.PRIZE_CATEGORY_QTY; i++) {
-			JPanel panel = new JPanel(true);
-			panel = new JPanel();
+			JPanel panel = new JPanel();
 			panel.setOpaque(false);
 			panel.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 15));
-
+			panel.setPreferredSize(new Dimension(preferredSize.width, 0));
+			
+			JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			scrollPane.setOpaque(false);
+			scrollPane.getViewport().setOpaque(false);
+			
+//			ScrollPaneLayout layout = new ScrollPaneLayout();
+//			layout.setVerticalScrollBarPolicy(ScrollPaneLayout.VERTICAL_SCROLLBAR_ALWAYS);
+//			layout.setHorizontalScrollBarPolicy(ScrollPaneLayout.HORIZONTAL_SCROLLBAR_NEVER);
+//			scrollPane.setLayout(layout);
+			
 			pnlDrawWinners[i] = panel;
-			pnlCard.add(panel, Integer.toString(i));
+			scrollPane.getViewport().add(panel);
+			
+			pnlCard.add(scrollPane, Integer.toString(i));
 		}
 		
 	}
@@ -70,6 +82,7 @@ public class InnerDrawPanel extends JPanel {
 		pnlDrawWinners[currentCardIdx].add(displayLabel);
 		displayLabel.revalidate(); //to show immediately.
 		displayLabel.repaint();
+		System.out.println(pnlDrawWinners[currentCardIdx].getSize());
 	}
 	
 	public String removeLastWinner() {

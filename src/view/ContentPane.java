@@ -42,11 +42,11 @@ public class ContentPane extends JPanel {
 
 	private static final long serialVersionUID = 5744529722826165904L;
 	
-	private static final Font WINNER_FONT = new Font("Comic Sans MS", Font.BOLD, 22);
+	private static final Font WINNER_FONT = new Font("Comic Sans MS", Font.BOLD, 35);
 	
 	private static final Color WINNER_FONT_COLOR = Color.WHITE;
 	
-	private static final Font ABSENT_WINNER_FONT = new Font("Comic Sans MS", Font.ITALIC, 22);
+	private static final Font ABSENT_WINNER_FONT = new Font("Comic Sans MS", Font.ITALIC, 35);
 	
 	private static final Color ABSENT_WINNER_FONT_COLOR = Color.CYAN;
 	
@@ -240,18 +240,18 @@ public class ContentPane extends JPanel {
 		g2.drawImage(imgMainBackground, 0, 0, null);
 
 		/* debug */
-//		g2.setColor(Color.CYAN);
+		g2.setColor(Color.CYAN);
 //		paintRect(g2, pnlBottomBlankBar.getBounds());
 //		paintRect(g2, pnlUpperBlankBar.getBounds());
 //		paintRect(g2, pnlDraw.getBounds());
 //		paintRect(g2, pnlPrizeDisplay.getBounds());
 //
-//		g2.translate(pnlDraw.getX(), pnlDraw.getY());
+		g2.translate(pnlDraw.getX(), pnlDraw.getY());
 //		paintRect(g2, pnlDraw.getPnlInnerDraw().getBounds());
 //		paintRect(g2, pnlDraw.getPnlVertical().getBounds());
 //		paintRect(g2, pnlDraw.getPnlHorizontal().getBounds());
-//		paintRect(g2, pnlDraw.getPnlInnerDraw().getCardPanel().getBounds());
-//		g2.translate(-pnlDraw.getX(), -pnlDraw.getY());
+		paintRect(g2, pnlDraw.getPnlInnerDraw().getCardPanel().getBounds());
+		g2.translate(-pnlDraw.getX(), -pnlDraw.getY());
 
 		g2.setColor(Color.BLACK);
 		g2.setFont(Font.getFont("ËÎÌו"));
