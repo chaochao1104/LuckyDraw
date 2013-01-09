@@ -5,6 +5,8 @@ import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
 
+import util.ExceptionUtil;
+
 public class MainWindow {
 	
 	private static Logger logger = Logger.getLogger(MainWindow.class.getName());
@@ -20,8 +22,7 @@ public class MainWindow {
 		try {
 			contentPane = new ContentPane();
 		} catch (Exception e) {
-			logger.error(e);
-			e.printStackTrace();
+			logger.error(ExceptionUtil.getStackTrace(e));
 		}
 		
 		contentPane.setOpaque(true);
@@ -35,7 +36,7 @@ public class MainWindow {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error(ExceptionUtil.getStackTrace(e));
 		}
 		
 		frame.setVisible(true);
@@ -49,7 +50,7 @@ public class MainWindow {
             	try {
             		MainWindow.start();	
             	} catch (Exception e) {
-            		logger.error(e);
+            		logger.error(ExceptionUtil.getStackTrace(e));
             	}
             	
             }

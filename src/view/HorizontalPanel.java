@@ -19,6 +19,7 @@ import model.CandidateList;
 
 import org.apache.log4j.Logger;
 
+import util.ExceptionUtil;
 import util.ImageUtil;
 import controller.strategy.DrawListener;
 
@@ -146,7 +147,7 @@ public class HorizontalPanel extends JPanel {
 		try {
 			drawThread.join();
 		} catch (InterruptedException e) {
-			logger.error(e.getMessage());
+			logger.error(ExceptionUtil.getStackTrace(e));
 		}
 		
 		return getWinner();
@@ -211,7 +212,7 @@ public class HorizontalPanel extends JPanel {
 					try {
 						Thread.sleep(16);
 					} catch(Exception e) {
-						logger.error(e.getMessage());
+						logger.error(ExceptionUtil.getStackTrace(e));
 					}
 				}
 			}

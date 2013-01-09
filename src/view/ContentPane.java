@@ -36,6 +36,7 @@ import model.persistence.ModelPersistenter;
 import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 
+import util.ExceptionUtil;
 import util.ImageUtil;
 import controller.strategy.DrawListener;
 import controller.strategy.factory.DrawListenerFactory;
@@ -316,7 +317,7 @@ public class ContentPane extends JPanel {
 			try {
 				ModelPersistenter.persistOutcome(outcome);
 			} catch (IOException e2) {
-				logger.error(e2.getMessage());
+				logger.error(ExceptionUtil.getStackTrace(e2));
 			}
 		}
 	}

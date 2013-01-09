@@ -9,6 +9,7 @@ import model.persistence.ModelPersistenter;
 
 import org.apache.log4j.Logger;
 
+import util.ExceptionUtil;
 import controller.strategy.DrawListener;
 
 public class OneByOneDrawListener extends DrawListener {
@@ -36,7 +37,7 @@ public class OneByOneDrawListener extends DrawListener {
 			try {
 				ModelPersistenter.persistOutcome(outcome);
 			} catch (IOException e2) {
-				logger.error(e2.getMessage());
+				logger.error(ExceptionUtil.getStackTrace(e2));
 			}
 
 		}	
