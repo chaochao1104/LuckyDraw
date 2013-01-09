@@ -46,7 +46,7 @@ public class ModelPersistenter {
 	public static List<Prize> loadPrizes() throws UnsupportedEncodingException, FileNotFoundException, DocumentException {
 		SAXReader reader = new SAXReader();
 		Document doc = reader.read(new InputStreamReader(
-				new FileInputStream(new File("config/prizes/prizes.xml")), FILE_IO_CHARSET ));
+				new FileInputStream(new File("config/prizes.xml")), FILE_IO_CHARSET ));
 		
 		List<Prize> ret = new ArrayList<Prize>();
 		List<Node> nodes = doc.selectNodes("/prizes/prize");
@@ -113,7 +113,7 @@ public class ModelPersistenter {
 	public static List<CandidateList> loadCandidates() throws FileNotFoundException, DocumentException {
 		SAXReader reader = new SAXReader();
 		Document doc = reader.read(
-				new FileInputStream(new File("config/candidates/candidates.xml")), 
+				new FileInputStream(new File("config/candidates.xml")), 
 				FILE_IO_CHARSET);
 
 		List<CandidateList> ret = new ArrayList<CandidateList>();		
@@ -145,7 +145,7 @@ public class ModelPersistenter {
 	public static Set<Absentee> loadAbsentees() throws FileNotFoundException, DocumentException {
 		SAXReader reader = new SAXReader();
 		Document doc = reader.read(
-				new FileInputStream(new File("config/absentees/absentees.xml")), 
+				new FileInputStream(new File("config/absentees.xml")), 
 				FILE_IO_CHARSET);
 		
 		Set<Absentee> ret = new HashSet<Absentee>();

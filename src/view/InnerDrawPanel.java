@@ -70,7 +70,6 @@ public class InnerDrawPanel extends JPanel {
 		pnlDrawWinners[currentCardIdx].add(displayLabel);
 		displayLabel.revalidate(); //to show immediately.
 		displayLabel.repaint();
-		System.out.println(pnlDrawWinners[currentCardIdx].getSize());
 	}
 	
 	public String removeLastWinner() {
