@@ -1,7 +1,5 @@
 package controller.strategy;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.util.Set;
 
@@ -18,13 +16,13 @@ import view.InnerDrawPanel;
 
 public abstract class DrawListener extends MouseAdapter {
 	
-	private static final Font WINNER_FONT = new Font("Comic Sans MS", Font.BOLD, 35);
-	
-	private static final Color WINNER_FONT_COLOR = Color.WHITE;
-	
-	private static final Font ABSENT_WINNER_FONT = new Font("Comic Sans MS", Font.ITALIC, 35);
-	
-	private static final Color ABSENT_WINNER_FONT_COLOR = Color.CYAN;
+//	private static final Font WINNER_FONT = new Font("Comic Sans MS", Font.BOLD, 35);
+//	
+//	private static final Color WINNER_FONT_COLOR = Color.WHITE;
+//	
+//	private static final Font ABSENT_WINNER_FONT = new Font("Comic Sans MS", Font.ITALIC, 35);
+//	
+//	private static final Color ABSENT_WINNER_FONT_COLOR = Color.CYAN;
 	
 	private static final String ABSENT_TIP = "º”∞‡÷–...";
 	
@@ -59,9 +57,9 @@ public abstract class DrawListener extends MouseAdapter {
 	
 	public void addWinnerToBoard(Candidate winner) {
 		if (!absentees.contains(new CandidateAdapter(winner)))
-			innerDrawPanel.addWinnerToBoard(winner.toString(), "", WINNER_FONT, WINNER_FONT_COLOR);
+			innerDrawPanel.addWinnerToBoard(winner.toString(), "", currPrize.getWinnerfontGroup().getFont(), currPrize.getWinnerfontGroup().getColor());
 		else 
-			innerDrawPanel.addWinnerToBoard(winner.toString(), ABSENT_TIP, ABSENT_WINNER_FONT, ABSENT_WINNER_FONT_COLOR);
+			innerDrawPanel.addWinnerToBoard(winner.toString(), ABSENT_TIP, currPrize.getAbsentWinnerFontGroup().getFont(), currPrize.getAbsentWinnerFontGroup().getColor());
 	}
 	
 	public abstract DrawStrategyType getType();

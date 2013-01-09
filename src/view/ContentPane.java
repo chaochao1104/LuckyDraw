@@ -1,9 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -223,24 +221,24 @@ public class ContentPane extends JPanel {
 		g2.drawImage(imgMainBackground, 0, 0, null);
 
 		/* debug */
-		g2.setColor(Color.CYAN);
+//		g2.setColor(Color.CYAN);
 //		paintRect(g2, pnlBottomBlankBar.getBounds());
 //		paintRect(g2, pnlUpperBlankBar.getBounds());
 //		paintRect(g2, pnlDraw.getBounds());
 //		paintRect(g2, pnlPrizeDisplay.getBounds());
 //
-		g2.translate(pnlDraw.getX(), pnlDraw.getY());
+//		g2.translate(pnlDraw.getX(), pnlDraw.getY());
 //		paintRect(g2, pnlDraw.getPnlInnerDraw().getBounds());
 //		paintRect(g2, pnlDraw.getPnlVertical().getBounds());
 //		paintRect(g2, pnlDraw.getPnlHorizontal().getBounds());
-		paintRect(g2, pnlDraw.getPnlInnerDraw().getCardPanel().getBounds());
-		g2.translate(-pnlDraw.getX(), -pnlDraw.getY());
+//		paintRect(g2, pnlDraw.getPnlInnerDraw().getCardPanel().getBounds());
+//		g2.translate(-pnlDraw.getX(), -pnlDraw.getY());
 
-		g2.setColor(Color.BLACK);
-		g2.setFont(Font.getFont("ËÎÌו"));
-		if (debugPoint != null) {
-			g2.drawString(debugPoint.toString(), 0, 30);
-		}
+//		g2.setColor(Color.BLACK);
+//		g2.setFont(Font.getFont("ËÎÌו"));
+//		if (debugPoint != null) {
+//			g2.drawString(debugPoint.toString(), 0, 30);
+//		}
 	}
 
 	class VerticalMouseListener extends MouseAdapter {
@@ -279,31 +277,6 @@ public class ContentPane extends JPanel {
 
 	}
 
-//	class DrawButtonMouseListener extends MouseAdapter {
-//
-//		@Override
-//		public void mouseClicked(MouseEvent e) {
-//			if (!pnlDraw.getPnlHorizontal().isRolling() && !candidateList.getCandidateList().isEmpty()) {					
-//				pnlDraw.getPnlHorizontal().startRolling(candidateList);
-//				pnlDraw.getPnlHorizontal().setDrawBtnImgStop();
-//			} else {
-//				Candidate winner = pnlDraw.getPnlHorizontal().stopRolling();
-//				candidateList.remove(winner);
-//				//addWinnerToBoard(winner);
-//				outcome.add(currPrize.getName(), winner.getNo());
-//				pnlDraw.getPnlHorizontal().setDrawBtnImgRoll();
-//				
-//				try {
-//					ModelPersistenter.persistOutcome(outcome);
-//				} catch (IOException e2) {
-//					logger.error(e2.getMessage());
-//				}
-//
-//			}
-//			
-//		}
-//	}
-
 	class RedrawButtonMouseListener extends MouseAdapter {
 
 		@Override
@@ -313,6 +286,7 @@ public class ContentPane extends JPanel {
 			int idx = winnerNo.indexOf(' ');
 			if (-1 == idx) return;
 			outcome.remove(winnerNo.substring(0, idx));
+			pnlDraw.getPnlHorizontal().setDrawBtnEnabled(outcome.size(currPrize.getName()) < currPrize.getQuantity());
 			
 			try {
 				ModelPersistenter.persistOutcome(outcome);

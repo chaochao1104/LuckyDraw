@@ -1,6 +1,7 @@
 package model.persistence;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,6 +26,7 @@ import model.Outcome;
 import model.OutcomeVisitor;
 import model.Prize;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -38,6 +40,8 @@ import org.dom4j.io.XMLWriter;
 public class ModelPersistenter {
 	
 	public static final String FILE_IO_CHARSET = "UTF-8";
+	
+	//private static Logger logger = Logger.getLogger(ModelPersistenter.class.getName());
 	
 	public static List<Prize> loadPrizes() throws UnsupportedEncodingException, FileNotFoundException, DocumentException {
 		SAXReader reader = new SAXReader();
@@ -67,15 +71,39 @@ public class ModelPersistenter {
 
 			prize.setDrawStrategy(strategy);
 			
-			Node fontNode = node.selectSingleNode("font-group");
-			String fontName = fontNode.valueOf("./@name");
-			String fontSize = fontNode.valueOf("./@size");
-			String fontColor = fontNode.valueOf("./@color");
-			String fontStyle = fontNode.valueOf("./@style");
+			Node winnerFontNode = node.selectSingleNode("winner-font-group");
+			String winnerFontName = winnerFontNode.valueOf("./@name");
+			String winnerFontStyle = winnerFontNode.valueOf("./@style");
+			String winnerFontSize = winnerFontNode.valueOf("./@size");
+			String winnerFontColor = winnerFontNode.valueOf("./@color");
 			
-			FontGroup fontGroup = new FontGroup();
-			//TODO:fontGroup.setFont(new Font(fontName, ));
-			fontGroup.setColor(new Color(Integer.parseInt(fontColor, 16)));
+			FontGroup winnerFontGroup = new FontGroup();
+			winnerFontGroup.setFont(new Font(winnerFontName, 
+								  	   Integer.parseInt(winnerFontStyle), 
+								  	   Integer.parseInt(winnerFontSize)));
+			
+			winnerFontGroup.setColor(new Color(
+										Integer.parseInt(
+												StringUtils.removeStart(winnerFontColor, "#"), 
+												16)));
+			prize.setWinnerfontGroup(winnerFontGroup);
+			
+			Node absentWinnerFontNode = node.selectSingleNode("absent-winner-font-group");
+			String absentWinnerFontName = absentWinnerFontNode.valueOf("./@name");
+			String absentWinnerFontStyle = absentWinnerFontNode.valueOf("./@style");
+			String absentWinnerFontSize = absentWinnerFontNode.valueOf("./@size");
+			String absentWinnerFontColor = absentWinnerFontNode.valueOf("./@color");
+			
+			FontGroup absentWinnerFontGroup = new FontGroup();
+			absentWinnerFontGroup.setFont(new Font(absentWinnerFontName, 
+								  	   Integer.parseInt(absentWinnerFontStyle), 
+								  	   Integer.parseInt(absentWinnerFontSize)));
+			absentWinnerFontGroup.setColor(new Color(
+											Integer.parseInt(
+													StringUtils.removeStart(absentWinnerFontColor, "#"), 
+													16)));
+			prize.setAbsentWinnerFontGroup(absentWinnerFontGroup);
+						
 			ret.add(prize);
 		}
 		

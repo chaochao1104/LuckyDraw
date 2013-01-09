@@ -4,10 +4,11 @@
 		<name>特等奖</name>
 		<img>special-prize.png</img>
 		<description>200元交通卡</description>
-		<candidate-list>0-9</candidate-list>
-		<quantity>10</quantity>
+		<candidate-list>general</candidate-list>
+		<quantity>2</quantity>
 		<strategy name="ONE_BY_ONE"></strategy>
-		<font-group name="" size="" style="" color="" />
+		<winner-font-group name="Comic Sans MS" size="35" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
 	</prize>
 	
 	<prize>
@@ -18,6 +19,8 @@
 		<candidate-list>general</candidate-list>
 		<quantity>1</quantity>
 		<strategy name="ONE_BY_ONE"></strategy>
+		<winner-font-group name="Comic Sans MS" size="35" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
 	</prize>
 	
 	<prize> 
@@ -26,7 +29,9 @@
 		<description>iphone 5 64G</description>
 		<candidate-list>general</candidate-list>
 		<quantity>5</quantity>
-		<strategy name="ONE_BY_ONE"></strategy>
+		<strategy name="one_by_one"></strategy>
+		<winner-font-group name="Comic Sans MS" size="35" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
 	</prize>
 	
 	<prize> 
@@ -36,15 +41,19 @@
 		<candidate-list>general</candidate-list>
 		<quantity>10</quantity>
 		<strategy name="ONE_BY_ONE"></strategy>
+		<winner-font-group name="Comic Sans MS" size="35" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
 	</prize>
 	
 	<prize> 
 		<name>四等奖</name>
 		<img>4th-prize.png</img>
 		<description>iphone 4 16G</description>
-		<candidate-list>general</candidate-list>
-		<quantity>5</quantity>
+		<candidate-list>0-9</candidate-list>
+		<quantity>10</quantity>
 		<strategy name="ONCE" value="500"></strategy>
+		<winner-font-group name="Comic Sans MS" size="100" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
 	</prize>
 	
 </prizes>

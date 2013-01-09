@@ -19,7 +19,9 @@ public class Prize {
 	
 	private DrawStrategy drawStrategy;
 	
-	private FontGroup fontGroup;
+	private FontGroup winnerfontGroup;
+	
+	private FontGroup absentWinnerFontGroup;
 
 	public String getName() {
 		return name;
@@ -77,14 +79,21 @@ public class Prize {
 		this.drawStrategy = drawStrategy;
 	}
 
-	public FontGroup getFontGroup() {
-		return fontGroup;
+	public FontGroup getWinnerfontGroup() {
+		return winnerfontGroup;
 	}
 
-	public void setFontGroup(FontGroup fontGroup) {
-		this.fontGroup = fontGroup;
+	public void setWinnerfontGroup(FontGroup winnerfontGroup) {
+		this.winnerfontGroup = winnerfontGroup;
+	}
+
+	public FontGroup getAbsentWinnerFontGroup() {
+		return absentWinnerFontGroup;
+	}
+
+	public void setAbsentWinnerFontGroup(FontGroup absentWinnerFontGroup) {
+		this.absentWinnerFontGroup = absentWinnerFontGroup;
 	}
 	
 	
-
 }

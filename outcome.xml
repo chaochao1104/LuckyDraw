@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <prizes>
-  <prize name="四等奖">
-    <winner no="2537"/>
-    <winner no="1686"/>
-    <winner no="1559"/>
-    <winner no="2152"/>
-    <winner no="0674"/>
-  </prize>
-  <prize name="一等奖">
-    <winner no="1115"/>
-    <winner no=""/>
-  </prize>
   <prize name="三等奖">
-    <winner no="2965"/>
-    <winner no="0858"/>
-  </prize>
-  <prize name="二等奖">
-    <winner no="0205"/>
-    <winner no="2412"/>
-    <winner no="0807"/>
-    <winner no="1785"/>
-    <winner no="0362"/>
+    <winner no="2085"/>
   </prize>
 </prizes>

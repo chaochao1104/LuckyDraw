@@ -9,7 +9,6 @@ import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 public class InnerDrawPanel extends JPanel {
 	
@@ -47,19 +46,8 @@ public class InnerDrawPanel extends JPanel {
 			panel.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 15));
 			panel.setPreferredSize(new Dimension(preferredSize.width, 0));
 			
-			JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-			scrollPane.setOpaque(false);
-			scrollPane.getViewport().setOpaque(false);
-			
-//			ScrollPaneLayout layout = new ScrollPaneLayout();
-//			layout.setVerticalScrollBarPolicy(ScrollPaneLayout.VERTICAL_SCROLLBAR_ALWAYS);
-//			layout.setHorizontalScrollBarPolicy(ScrollPaneLayout.HORIZONTAL_SCROLLBAR_NEVER);
-//			scrollPane.setLayout(layout);
-			
 			pnlDrawWinners[i] = panel;
-			scrollPane.getViewport().add(panel);
-			
-			pnlCard.add(scrollPane, Integer.toString(i));
+			pnlCard.add(panel, Integer.toString(i));
 		}
 		
 	}
