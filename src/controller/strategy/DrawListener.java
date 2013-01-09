@@ -9,9 +9,9 @@ import model.Absentee;
 import model.Candidate;
 import model.CandidateAdapter;
 import model.CandidateList;
+import model.DrawStrategy.DrawStrategyType;
 import model.Outcome;
 import model.Prize;
-import model.Prize.DrawStrategy.DrawStrategyType;
 import view.HorizontalPanel;
 import view.InnerDrawPanel;
 

@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import model.Candidate;
-import model.Prize.DrawStrategy.DrawStrategyType;
+import model.DrawStrategy.DrawStrategyType;
 import model.persistence.ModelPersistenter;
 
 import org.apache.log4j.Logger;

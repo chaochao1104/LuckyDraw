@@ -1,5 +1,6 @@
 package model.persistence;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,11 +18,12 @@ import java.util.Set;
 import model.Absentee;
 import model.Candidate;
 import model.CandidateList;
+import model.DrawStrategy;
+import model.DrawStrategy.DrawStrategyType;
+import model.FontGroup;
 import model.Outcome;
 import model.OutcomeVisitor;
 import model.Prize;
-import model.Prize.DrawStrategy;
-import model.Prize.DrawStrategy.DrawStrategyType;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -59,12 +61,21 @@ public class ModelPersistenter {
 			String strategyName = strategyNode.valueOf("./@name");
 			String strategyValue = strategyNode.valueOf("./@value");
 			DrawStrategy strategy = new DrawStrategy();
-			strategy.setType(DrawStrategyType.valueOf(strategyName));
+			strategy.setType(DrawStrategyType.valueOf(strategyName.toUpperCase()));
 			if (strategyValue != null && !strategyValue.trim().isEmpty())
 				strategy.setValue(Long.parseLong(strategyValue));
 
 			prize.setDrawStrategy(strategy);
 			
+			Node fontNode = node.selectSingleNode("font-group");
+			String fontName = fontNode.valueOf("./@name");
+			String fontSize = fontNode.valueOf("./@size");
+			String fontColor = fontNode.valueOf("./@color");
+			String fontStyle = fontNode.valueOf("./@style");
+			
+			FontGroup fontGroup = new FontGroup();
+			//TODO:fontGroup.setFont(new Font(fontName, ));
+			fontGroup.setColor(new Color(Integer.parseInt(fontColor, 16)));
 			ret.add(prize);
 		}
 		

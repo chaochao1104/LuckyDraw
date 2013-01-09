@@ -3,7 +3,7 @@ package controller.strategy.factory;
 import java.util.EnumMap;
 import java.util.Map;
 
-import model.Prize.DrawStrategy.DrawStrategyType;
+import model.DrawStrategy.DrawStrategyType;
 import controller.strategy.DrawListener;
 import controller.strategy.impl.OnceDrawListener;
 import controller.strategy.impl.OneByOneDrawListener;

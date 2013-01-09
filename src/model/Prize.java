@@ -4,37 +4,6 @@ package model;
 
 
 public class Prize {
-
-	public static class DrawStrategy {
-		
-		public enum DrawStrategyType {
-			ONE_BY_ONE,
-			ONCE,
-		}
-		
-		private DrawStrategyType type;
-		
-		private long value;
-
-		public DrawStrategyType getType() {
-			return type;
-		}
-
-		public void setType(DrawStrategyType type) {
-			this.type = type;
-		}
-
-		public long getValue() {
-			return value;
-		}
-
-		public void setValue(long value) {
-			this.value = value;
-		}
-		
-	}
-
-	
 	
 	private String name;
 	
@@ -49,6 +18,8 @@ public class Prize {
 	private boolean needRedraw;
 	
 	private DrawStrategy drawStrategy;
+	
+	private FontGroup fontGroup;
 
 	public String getName() {
 		return name;
@@ -104,6 +75,16 @@ public class Prize {
 
 	public void setDrawStrategy(DrawStrategy drawStrategy) {
 		this.drawStrategy = drawStrategy;
-	}	
+	}
+
+	public FontGroup getFontGroup() {
+		return fontGroup;
+	}
+
+	public void setFontGroup(FontGroup fontGroup) {
+		this.fontGroup = fontGroup;
+	}
+	
+	
 
 }

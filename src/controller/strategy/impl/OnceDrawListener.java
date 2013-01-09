@@ -8,7 +8,7 @@ import java.util.TimerTask;
 
 import model.Candidate;
 import model.CandidateList;
-import model.Prize.DrawStrategy.DrawStrategyType;
+import model.DrawStrategy.DrawStrategyType;
 import controller.strategy.DrawListener;
 
 public class OnceDrawListener extends DrawListener {
