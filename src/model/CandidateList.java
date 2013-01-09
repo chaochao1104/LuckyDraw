@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CandidateList {
@@ -8,6 +9,13 @@ public class CandidateList {
 	
 	private List<Candidate> candidateList;
 
+	public CandidateList(){}
+	
+	public CandidateList(CandidateList copy) {
+		this.name = copy.name;
+		this.candidateList = new ArrayList<Candidate>(copy.candidateList);
+	}
+	
 	public boolean remove(Candidate toRemove) {
 		return candidateList.remove(toRemove);
 	}

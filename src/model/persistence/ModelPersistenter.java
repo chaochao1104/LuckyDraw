@@ -1,4 +1,4 @@
-package model.persistenter;
+package model.persistence;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +20,8 @@ import model.CandidateList;
 import model.Outcome;
 import model.OutcomeVisitor;
 import model.Prize;
+import model.Prize.DrawStrategy;
+import model.Prize.DrawStrategy.DrawStrategyType;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -52,6 +54,17 @@ public class ModelPersistenter {
 			Node needRedrawNode = node.selectSingleNode("need-redraw");
 			String needRedraw = needRedrawNode == null? "false" : needRedrawNode.getText();
 			prize.setNeedRedraw("true".equalsIgnoreCase(needRedraw));
+			
+			Node strategyNode = node.selectSingleNode("strategy");
+			String strategyName = strategyNode.valueOf("./@name");
+			String strategyValue = strategyNode.valueOf("./@value");
+			DrawStrategy strategy = new DrawStrategy();
+			strategy.setType(DrawStrategyType.valueOf(strategyName));
+			if (strategyValue != null && !strategyValue.trim().isEmpty())
+				strategy.setValue(Long.parseLong(strategyValue));
+
+			prize.setDrawStrategy(strategy);
+			
 			ret.add(prize);
 		}
 		

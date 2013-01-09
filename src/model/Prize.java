@@ -2,8 +2,40 @@
 package model;
 
 
+
 public class Prize {
 
+	public static class DrawStrategy {
+		
+		public enum DrawStrategyType {
+			ONE_BY_ONE,
+			ONCE,
+		}
+		
+		private DrawStrategyType type;
+		
+		private long value;
+
+		public DrawStrategyType getType() {
+			return type;
+		}
+
+		public void setType(DrawStrategyType type) {
+			this.type = type;
+		}
+
+		public long getValue() {
+			return value;
+		}
+
+		public void setValue(long value) {
+			this.value = value;
+		}
+		
+	}
+
+	
+	
 	private String name;
 	
 	private String imgName;
@@ -12,9 +44,11 @@ public class Prize {
 	
 	private String candidateListName;
 	
-	private int quantity;//no use so far.
+	private int quantity;
 	
 	private boolean needRedraw;
+	
+	private DrawStrategy drawStrategy;
 
 	public String getName() {
 		return name;
@@ -64,59 +98,12 @@ public class Prize {
 		this.needRedraw = needRedraw;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime
-				* result
-				+ ((candidateListName == null) ? 0 : candidateListName
-						.hashCode());
-		result = prime * result
-				+ ((deccription == null) ? 0 : deccription.hashCode());
-		result = prime * result + ((imgName == null) ? 0 : imgName.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + (needRedraw ? 1231 : 1237);
-		result = prime * result + quantity;
-		return result;
+	public DrawStrategy getDrawStrategy() {
+		return drawStrategy;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Prize other = (Prize) obj;
-		if (candidateListName == null) {
-			if (other.candidateListName != null)
-				return false;
-		} else if (!candidateListName.equals(other.candidateListName))
-			return false;
-		if (deccription == null) {
-			if (other.deccription != null)
-				return false;
-		} else if (!deccription.equals(other.deccription))
-			return false;
-		if (imgName == null) {
-			if (other.imgName != null)
-				return false;
-		} else if (!imgName.equals(other.imgName))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (needRedraw != other.needRedraw)
-			return false;
-		if (quantity != other.quantity)
-			return false;
-		return true;
-	}
+	public void setDrawStrategy(DrawStrategy drawStrategy) {
+		this.drawStrategy = drawStrategy;
+	}	
 
-
-		
 }

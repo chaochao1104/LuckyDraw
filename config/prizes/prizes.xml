@@ -6,6 +6,7 @@
 		<description>200元交通卡</description>
 		<candidate-list>0-9</candidate-list>
 		<quantity>10</quantity>
+		<strategy name="ONE_BY_ONE"></strategy>
 	</prize>
 	
 	<prize>
@@ -15,6 +16,7 @@
 		<description>24K 金条 100G</description>
 		<candidate-list>general</candidate-list>
 		<quantity>1</quantity>
+		<strategy name="ONE_BY_ONE"></strategy>
 	</prize>
 	
 	<prize> 
@@ -23,6 +25,7 @@
 		<description>iphone 5 64G</description>
 		<candidate-list>general</candidate-list>
 		<quantity>5</quantity>
+		<strategy name="ONE_BY_ONE"></strategy>
 	</prize>
 	
 	<prize> 
@@ -31,6 +34,7 @@
 		<description>iphone 4s 16G</description>
 		<candidate-list>general</candidate-list>
 		<quantity>10</quantity>
+		<strategy name="ONE_BY_ONE"></strategy>
 	</prize>
 	
 	<prize> 
@@ -38,7 +42,8 @@
 		<img>4th-prize.png</img>
 		<description>iphone 4 16G</description>
 		<candidate-list>general</candidate-list>
-		<quantity>30</quantity>
+		<quantity>5</quantity>
+		<strategy name="ONCE" value="500"></strategy>
 	</prize>
 	
 </prizes>

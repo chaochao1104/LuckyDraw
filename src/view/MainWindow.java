@@ -20,7 +20,8 @@ public class MainWindow {
 		try {
 			contentPane = new ContentPane();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e);
+			e.printStackTrace();
 		}
 		
 		contentPane.setOpaque(true);
@@ -34,7 +35,7 @@ public class MainWindow {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e);
 		}
 		
 		frame.setVisible(true);
@@ -48,7 +49,7 @@ public class MainWindow {
             	try {
             		MainWindow.start();	
             	} catch (Exception e) {
-            		logger.error(e.getMessage());
+            		logger.error(e);
             	}
             	
             }

@@ -25,32 +25,25 @@ import javax.swing.JPanel;
 
 import model.Absentee;
 import model.Candidate;
-import model.CandidateAdapter;
 import model.CandidateList;
 import model.Outcome;
 import model.OutcomeVisitor;
 import model.Prize;
 import model.exception.NoCandidateListFoundError;
 import model.exception.NoPrizeFoundError;
-import model.persistenter.ModelPersistenter;
+import model.persistence.ModelPersistenter;
 
 import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 
 import util.ImageUtil;
+import controller.strategy.DrawListener;
+import controller.strategy.factory.DrawListenerFactory;
 public class ContentPane extends JPanel {
 
 	private static final long serialVersionUID = 5744529722826165904L;
 	
-	private static final Font WINNER_FONT = new Font("Comic Sans MS", Font.BOLD, 35);
-	
-	private static final Color WINNER_FONT_COLOR = Color.WHITE;
-	
-	private static final Font ABSENT_WINNER_FONT = new Font("Comic Sans MS", Font.ITALIC, 35);
-	
-	private static final Color ABSENT_WINNER_FONT_COLOR = Color.CYAN;
-	
-	private static final String ABSENT_TIP = "加班中...";
+
 	
 	private static Logger logger = Logger.getLogger(ContentPane.class.getName());
 	
@@ -81,8 +74,6 @@ public class ContentPane extends JPanel {
 	private Map<String, Candidate> noIndexedRemovedCandidates = new HashMap<String, Candidate>();
 	
 	private Outcome outcome = new Outcome();
-
-	private Thread drawThread;
 	
 	Point debugPoint;
 
@@ -109,7 +100,6 @@ public class ContentPane extends JPanel {
 	}
 
 	private void initModels() throws UnsupportedEncodingException, FileNotFoundException, DocumentException, NoPrizeFoundError, NoCandidateListFoundError {
-
 		prizes = ModelPersistenter.loadPrizes();
 		
 		if (prizes == null || prizes.isEmpty())
@@ -145,7 +135,7 @@ public class ContentPane extends JPanel {
 		
 		if (isOutcomeExisting) {
 			final String[] options = {"继续上次", "重新开始"};
-			int response=JOptionPane.showOptionDialog(
+			int response = JOptionPane.showOptionDialog(
 										this, 
 										"检测到上次抽奖记录，是否要继续？",
 										"继续上次or重新开始",
@@ -161,7 +151,8 @@ public class ContentPane extends JPanel {
 						Prize prz = nameIndexedPrizes.get(prize);
 						CandidateList candidateList = nameIndexedCandidateLists.get(prz.getCandidateListName());
 						Candidate removedCandidate = candidateList.removeByCandidateNo(winnerNo);
-						noIndexedRemovedCandidates.put(removedCandidate.getNo(), removedCandidate);
+						if (removedCandidate != null)						
+							noIndexedRemovedCandidates.put(removedCandidate.getNo(), removedCandidate);
 					}
 					
 				});
@@ -199,13 +190,10 @@ public class ContentPane extends JPanel {
 			verticalMouseAdapters[i] = new VerticalMouseListener(i);
 
 		pnlDraw.getPnlVertical().setMouseListeners(verticalMouseAdapters);
-
-		pnlDraw.getPnlHorizontal().setDrawButtonMouseListener(
-				new DrawButtonMouseListener());
-		pnlDraw.getPnlHorizontal().setRedrawButtonMouseListener(
+		pnlDraw.getPnlHorizontal().setRedrawBtnMouseListener(
 				new RedrawButtonMouseListener());
 		this.add(pnlDraw, BorderLayout.CENTER);
-
+		
 		outcome.traverse(new OutcomeVisitor() {
 
 			public void visit(String prize, String winnerNo) {
@@ -214,22 +202,16 @@ public class ContentPane extends JPanel {
 				if (idx == -1) return;
 				
 				verticalMouseAdapters[idx].mouseClicked(null);
+				final DrawListener drawBtnListener = pnlDraw.getPnlHorizontal().getDrawBtnMouseListener();
 				Candidate winner = noIndexedRemovedCandidates.get(winnerNo);
 				if (winner != null)
-					addWinnerToBoard(winner);
+					drawBtnListener.addWinnerToBoard(winner);
 			}
 			
 		});
 		
 		verticalMouseAdapters[VerticalPanel.PRIZE_CATEGORY_QTY - 1].mouseClicked(null);
 		imgMainBackground = ImageUtil.loadImg("main-background.jpg");
-	}
-
-	private void addWinnerToBoard(Candidate winner) {
-		if (!absentees.contains(new CandidateAdapter(winner)))
-			pnlDraw.getPnlInnerDraw().addWinnerToBoard(winner.toString(), "", WINNER_FONT, WINNER_FONT_COLOR);
-		else 
-			pnlDraw.getPnlInnerDraw().addWinnerToBoard(winner.toString(), ABSENT_TIP, ABSENT_WINNER_FONT, ABSENT_WINNER_FONT_COLOR);
 	}
 	
 	@Override
@@ -279,50 +261,47 @@ public class ContentPane extends JPanel {
 			candidateList = nameIndexedCandidateLists.get(currPrize.getCandidateListName());
 			Image prizeImg = nameIndexedPrizeImgs.get(currPrize.getImgName());
 			
-			pnlDraw.getPnlHorizontal().stopRolling();
-			pnlDraw.getPnlHorizontal().clearRollingLabel();
+			HorizontalPanel pnlHorizontal = pnlDraw.getPnlHorizontal();
+			pnlHorizontal.stopRolling();
+			pnlHorizontal.clearRollingLabel();
+			pnlHorizontal.setDrawBtnEnabled(outcome.size(currPrize.getName()) < currPrize.getQuantity());
+			pnlHorizontal.setRedrawBtnEnabled(currPrize.needRedraw());
+			pnlHorizontal.removeDrawBtnMouseListener();
+			DrawListener drawStrategy = 
+					DrawListenerFactory.strategyInstance(currPrize.getDrawStrategy().getType());
 			
-			pnlDraw.getPnlHorizontal().setRedrawBtnEnabled(currPrize.needRedraw());
+			drawStrategy.init(pnlDraw.getPnlInnerDraw(), pnlHorizontal, candidateList, outcome, absentees, currPrize);
+			pnlHorizontal.setDrawBtnMouseListener(drawStrategy);
 			
 			pnlPrizeDisplay.setImg(prizeImg);
 		}
 
 	}
 
-	class DrawButtonMouseListener extends MouseAdapter {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			pnlDraw.getPnlHorizontal().flipDrawBtnState();
-			if (!pnlDraw.getPnlHorizontal().isRolling() && !candidateList.getCandidateList().isEmpty()) {					
-				drawThread = pnlDraw.getPnlHorizontal().startRolling(candidateList);
-			} else {
-				pnlDraw.getPnlHorizontal().stopRolling();
-				if (drawThread == null) return;
-				
-				try {
-					drawThread.join(); //wait for roll thread to stop.
-				} catch (InterruptedException e1) {
-					logger.error(e1.getMessage());
-				}
-				drawThread = null;
-				Candidate winner = pnlDraw.getPnlHorizontal().getWinner();
-				candidateList.remove(winner);
-				
-				addWinnerToBoard(winner);
-				
-				outcome.add(currPrize.getName(), winner.getNo());
-
-				try {
-					ModelPersistenter.persistOutcome(outcome);
-				} catch (IOException e2) {
-					logger.error(e2.getMessage());
-				}
-
-			}
-			
-		}
-	}
+//	class DrawButtonMouseListener extends MouseAdapter {
+//
+//		@Override
+//		public void mouseClicked(MouseEvent e) {
+//			if (!pnlDraw.getPnlHorizontal().isRolling() && !candidateList.getCandidateList().isEmpty()) {					
+//				pnlDraw.getPnlHorizontal().startRolling(candidateList);
+//				pnlDraw.getPnlHorizontal().setDrawBtnImgStop();
+//			} else {
+//				Candidate winner = pnlDraw.getPnlHorizontal().stopRolling();
+//				candidateList.remove(winner);
+//				//addWinnerToBoard(winner);
+//				outcome.add(currPrize.getName(), winner.getNo());
+//				pnlDraw.getPnlHorizontal().setDrawBtnImgRoll();
+//				
+//				try {
+//					ModelPersistenter.persistOutcome(outcome);
+//				} catch (IOException e2) {
+//					logger.error(e2.getMessage());
+//				}
+//
+//			}
+//			
+//		}
+//	}
 
 	class RedrawButtonMouseListener extends MouseAdapter {
 

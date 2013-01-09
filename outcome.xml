@@ -1,72 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <prizes>
-  <prize name="一等奖">
-    <winner no="1621"/>
-    <winner no="0543"/>
-    <winner no="2883"/>
-    <winner no="2313"/>
-    <winner no="1300"/>
-    <winner no="1552"/>
-    <winner no="2204"/>
-    <winner no="2524"/>
-    <winner no="2664"/>
-    <winner no="1851"/>
-    <winner no="2208"/>
-    <winner no="2143"/>
-    <winner no="1595"/>
-    <winner no="1117"/>
-    <winner no="1830"/>
-    <winner no="0740"/>
-    <winner no="0138"/>
-    <winner no="0818"/>
-    <winner no="1145"/>
-    <winner no="2841"/>
-    <winner no="2278"/>
-    <winner no="0702"/>
-  </prize>
   <prize name="四等奖">
-    <winner no="2952"/>
-    <winner no="2661"/>
-    <winner no="0398"/>
-    <winner no="0656"/>
-    <winner no="2323"/>
-    <winner no="2027"/>
-    <winner no="1801"/>
-    <winner no="0453"/>
-    <winner no="1181"/>
+    <winner no="2537"/>
+    <winner no="1686"/>
+    <winner no="1559"/>
+    <winner no="2152"/>
     <winner no="0674"/>
-    <winner no="1047"/>
-    <winner no="2188"/>
-    <winner no="2558"/>
-    <winner no="2477"/>
-    <winner no="0033"/>
-    <winner no="1120"/>
-    <winner no="0278"/>
-    <winner no="2501"/>
-    <winner no="0115"/>
-    <winner no="2104"/>
+  </prize>
+  <prize name="一等奖">
+    <winner no="1115"/>
+    <winner no=""/>
+  </prize>
+  <prize name="三等奖">
+    <winner no="2965"/>
+    <winner no="0858"/>
   </prize>
   <prize name="二等奖">
-    <winner no="0893"/>
-    <winner no="0089"/>
-    <winner no="1193"/>
-    <winner no="2595"/>
-    <winner no="1016"/>
-    <winner no="2828"/>
-    <winner no="0223"/>
-    <winner no="0826"/>
-    <winner no="1331"/>
-    <winner no="0820"/>
-    <winner no="0365"/>
-    <winner no="2315"/>
-    <winner no="2615"/>
-    <winner no="2105"/>
-    <winner no="0787"/>
-    <winner no="0606"/>
-    <winner no="1963"/>
-    <winner no="1013"/>
-    <winner no="2895"/>
-    <winner no="0639"/>
+    <winner no="0205"/>
+    <winner no="2412"/>
+    <winner no="0807"/>
+    <winner no="1785"/>
+    <winner no="0362"/>
   </prize>
 </prizes>

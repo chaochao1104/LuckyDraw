@@ -91,9 +91,8 @@ public class VerticalPanel extends JPanel {
 		if (mouseListeners.length != PRIZE_CATEGORY_QTY)
 			throw new IllegalArgumentException();
 		
-		for (int i = 0; i < mouseListeners.length; i++) {
+		for (int i = 0; i < mouseListeners.length; i++)
 			lblPrizes[i].addMouseListener(mouseListeners[i]);
-		}
 	}
 	
 	public void setOnlyButtonDown(int idx) {

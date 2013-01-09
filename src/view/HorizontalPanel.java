@@ -20,6 +20,7 @@ import model.CandidateList;
 import org.apache.log4j.Logger;
 
 import util.ImageUtil;
+import controller.strategy.DrawListener;
 
 public class HorizontalPanel extends JPanel {
 
@@ -39,17 +40,19 @@ public class HorizontalPanel extends JPanel {
 	
 	private JLabel lblRedraw;
 	
-	private ImageIcon icoDrawGo;
+	private ImageIcon icoDrawRoll;
 	
 	private ImageIcon icoDrawStop;
-	
-	private boolean isDrawStateGo = true;
 	
 	private boolean isRolling;
 	
 	private Candidate winner;
 	
 	private MouseListener redrawMouseListener;
+	
+	private DrawListener drawMouseListener;
+	
+	private Thread drawThread;
 	
 	public HorizontalPanel(Dimension preferredSize) throws FileNotFoundException {
 		super(true);
@@ -89,8 +92,8 @@ public class HorizontalPanel extends JPanel {
 //		lblRoll.setBackground(Color.ORANGE); //for test
 		
 		icoDrawStop = ImageUtil.loadImgIcon("draw-stop.png");
-		icoDrawGo = ImageUtil.loadImgIcon("draw-go.png");
-		lblDraw = new JLabel(icoDrawGo);
+		icoDrawRoll = ImageUtil.loadImgIcon("draw-go.png");
+		lblDraw = new JLabel(icoDrawRoll);
 		lblDraw.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		ImageIcon icoRedraw = ImageUtil.loadImgIcon("redraw.png");
@@ -99,42 +102,64 @@ public class HorizontalPanel extends JPanel {
 		
 	}
 
-	public void setDrawButtonMouseListener(MouseListener listener) {
+	public void removeDrawBtnMouseListener() {
+		lblDraw.removeMouseListener(drawMouseListener);
+		drawMouseListener = null;
+	}
+	
+	public void setDrawBtnMouseListener(DrawListener listener) {
+		drawMouseListener = listener;
 		lblDraw.addMouseListener(listener);
 	}
 	
-	public void setRedrawButtonMouseListener(MouseListener listener) {
+	public DrawListener getDrawBtnMouseListener() {
+		return drawMouseListener;
+	}
+	
+	public void setRedrawBtnMouseListener(MouseListener listener) {
 		redrawMouseListener = listener;
 		lblRedraw.addMouseListener(listener);
 	}
 	
-	public void flipDrawBtnState() {
-		if (isDrawStateGo) 
-			this.lblDraw.setIcon(icoDrawStop); 
-		else 
-			this.lblDraw.setIcon(icoDrawGo);
-		
+	public void setDrawBtnImgStop() {
+		this.lblDraw.setIcon(icoDrawStop);
 		lblDraw.revalidate();
 		lblDraw.repaint();
-		isDrawStateGo = !isDrawStateGo;
+	}
+	
+	public void setDrawBtnImgRoll() {
+		this.lblDraw.setIcon(icoDrawRoll);
+		lblDraw.revalidate();
+		lblDraw.repaint();
 	}
 	
 	public synchronized boolean isRolling() {
 		return isRolling;
 	}
 	
-	public synchronized void stopRolling() {
+	public Candidate stopRolling() {
 		this.isRolling = false;
+		
+		if (drawThread == null) 
+			return new Candidate("", "");
+		
+		try {
+			drawThread.join();
+		} catch (InterruptedException e) {
+			logger.error(e.getMessage());
+		}
+		
+		return getWinner();
 	}
 	
 	public synchronized Thread startRolling(CandidateList candidateList) {
 		if (isRolling()) return null;
 
-		Thread ret = new Thread(new DrawRunner(candidateList));
-		ret.start();
+		drawThread = new Thread(new DrawRunner(candidateList));
+		drawThread.start();
 		this.isRolling = true;
 		
-		return ret;
+		return drawThread;
 	}
 	
 	public Candidate getWinner() {
@@ -145,23 +170,31 @@ public class HorizontalPanel extends JPanel {
 		this.lblRoll.setText("");
 	}
 	
-	public void setRedrawBtnEnabled(boolean visible) {
-		lblRedraw.setEnabled(visible);
-		lblRedraw.removeMouseListener(redrawMouseListener);
-		if (visible)
-			lblRedraw.addMouseListener(redrawMouseListener);
+	public void setRedrawBtnEnabled(boolean enabled) {
+		setLabelEnabled(lblRedraw, redrawMouseListener, enabled);
+	}
+	
+	public void setDrawBtnEnabled(boolean enabled) {
+		setLabelEnabled(lblDraw, drawMouseListener, enabled);
+	}
+	
+	private void setLabelEnabled(JLabel label, MouseListener l, boolean enabled) {
+		label.setEnabled(enabled);
+		label.removeMouseListener(l);
+		if (enabled)
+			label.addMouseListener(l);
 	}
 	
 	class DrawRunner implements Runnable {
-
+		
 		private CandidateList candidateList;
-	
+		
 		DrawRunner(CandidateList candidateList) {
 			this.candidateList = candidateList;
 		}
-	
+		
 		public void run() {
-						
+		
 			while(true) {
 				if (!isRolling()) break;
 				
@@ -174,7 +207,7 @@ public class HorizontalPanel extends JPanel {
 					winner = candidate;
 					String no = winner.getNo();
 					lblRoll.setText(no);
-										
+					
 					try {
 						Thread.sleep(16);
 					} catch(Exception e) {
