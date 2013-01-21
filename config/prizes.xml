@@ -28,7 +28,7 @@
 		<img>2nd-prize.png</img>
 		<description>iphone 5 64G</description>
 		<candidate-list>general</candidate-list>
-		<quantity>5</quantity>
+		<quantity>10</quantity>
 		<strategy name="one_by_one"></strategy>
 		<winner-font-group name="Comic Sans MS" size="35" style="1" color="#ffffff" />
 		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
@@ -39,10 +39,10 @@
 		<img>3rd-prize.png</img>
 		<description>iphone 4s 16G</description>
 		<candidate-list>general</candidate-list>
-		<quantity>10</quantity>
+		<quantity>20</quantity>
 		<strategy name="ONE_BY_ONE"></strategy>
-		<winner-font-group name="Comic Sans MS" size="35" style="1" color="#ffffff" />
-		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
+		<winner-font-group name="Comic Sans MS" size="30" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Comic Sans MS" size="30" style="2" color="#00ffff" />
 	</prize>
 	
 	<prize> 
