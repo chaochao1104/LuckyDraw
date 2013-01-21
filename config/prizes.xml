@@ -7,8 +7,8 @@
 		<candidate-list>general</candidate-list>
 		<quantity>2</quantity>
 		<strategy name="ONE_BY_ONE"></strategy>
-		<winner-font-group name="Comic Sans MS" size="35" style="1" color="#ffffff" />
-		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
+		<winner-font-group name="Arial" size="35" style="1" color="#000000" />
+		<absent-winner-font-group name="Arial" size="35" style="2" color="#ff0000" />
 	</prize>
 	
 	<prize>
@@ -19,8 +19,8 @@
 		<candidate-list>general</candidate-list>
 		<quantity>1</quantity>
 		<strategy name="ONE_BY_ONE"></strategy>
-		<winner-font-group name="Comic Sans MS" size="35" style="1" color="#ffffff" />
-		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
+		<winner-font-group name="Arial" size="40" style="1" color="#000000" />
+		<absent-winner-font-group name="Arial" size="40" style="2" color="#ff0000" />
 	</prize>
 	
 	<prize> 
@@ -30,8 +30,8 @@
 		<candidate-list>general</candidate-list>
 		<quantity>10</quantity>
 		<strategy name="one_by_one"></strategy>
-		<winner-font-group name="Comic Sans MS" size="35" style="1" color="#ffffff" />
-		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
+		<winner-font-group name="Arial" size="35" style="1" color="#000000" />
+		<absent-winner-font-group name="Arial" size="35" style="2" color="#ff0000" />
 	</prize>
 	
 	<prize> 
@@ -41,8 +41,8 @@
 		<candidate-list>general</candidate-list>
 		<quantity>20</quantity>
 		<strategy name="ONE_BY_ONE"></strategy>
-		<winner-font-group name="Comic Sans MS" size="30" style="1" color="#ffffff" />
-		<absent-winner-font-group name="Comic Sans MS" size="30" style="2" color="#00ffff" />
+		<winner-font-group name="Arial" size="30" style="1" color="#000000" />
+		<absent-winner-font-group name="Arial" size="30" style="2" color="#ff0000" />
 	</prize>
 	
 	<prize> 
@@ -52,8 +52,8 @@
 		<candidate-list>0-9</candidate-list>
 		<quantity>10</quantity>
 		<strategy name="ONCE" value="500"></strategy>
-		<winner-font-group name="Comic Sans MS" size="100" style="1" color="#ffffff" />
-		<absent-winner-font-group name="Comic Sans MS" size="35" style="2" color="#00ffff" />
+		<winner-font-group name="Arial" size="100" style="1" color="#000000" />
+		<absent-winner-font-group name="Arial" size="35" style="2" color="#ff0000" />
 	</prize>
 	
 </prizes>

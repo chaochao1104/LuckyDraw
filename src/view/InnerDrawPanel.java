@@ -64,6 +64,9 @@ public class InnerDrawPanel extends JPanel {
 	public void addWinnerToBoard(String displayTxt, String tip, Font font, Color color) {
 		JLabel displayLabel = new JLabel();
 		displayLabel.setFont(font);
+		
+		displayLabel.setBackground(new Color(204, 204, 204));
+		displayLabel.setOpaque(true);
 		displayLabel.setForeground(color);
 		displayLabel.setText(displayTxt);
 		displayLabel.setToolTipText(tip);
