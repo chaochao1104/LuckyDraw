@@ -263,7 +263,6 @@ public class ContentPane extends JPanel {
 			HorizontalPanel pnlHorizontal = pnlDraw.getPnlHorizontal();
 			pnlHorizontal.stopRolling();
 			pnlHorizontal.clearRollingLabel();
-			pnlHorizontal.setDrawBtnEnabled(outcome.size(currPrize.getName()) < currPrize.getQuantity());
 			pnlHorizontal.setRedrawBtnEnabled(currPrize.needRedraw());
 			pnlHorizontal.removeDrawBtnMouseListener();
 			DrawListener drawStrategy = 
@@ -272,6 +271,7 @@ public class ContentPane extends JPanel {
 			drawStrategy.init(pnlDraw.getPnlInnerDraw(), pnlHorizontal, candidateList, outcome, absentees, currPrize);
 			pnlHorizontal.setDrawBtnMouseListener(drawStrategy);
 			
+			pnlHorizontal.setDrawBtnEnabled(outcome.size(currPrize.getName()) < currPrize.getQuantity());
 			pnlPrizeDisplay.setImg(prizeImg);
 		}
 
