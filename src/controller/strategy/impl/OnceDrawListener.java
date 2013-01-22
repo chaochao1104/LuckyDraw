@@ -15,11 +15,15 @@ import model.persistence.ModelPersistenter;
 import org.apache.log4j.Logger;
 
 import util.ExceptionUtil;
-import controller.strategy.DrawListener;
+import controller.strategy.NoninterruptableDrawListener;
 
-public class OnceDrawListener extends DrawListener {
+public class OnceDrawListener extends NoninterruptableDrawListener {
 
 	private static Logger logger = Logger.getLogger(OnceDrawListener.class.getName());
+	
+	private Timer timer = new Timer(false);
+	
+	private boolean isWorking = false;
 	
 	@Override
 	public DrawStrategyType getType() {
@@ -28,12 +32,10 @@ public class OnceDrawListener extends DrawListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		pnlHorizontal.removeDrawBtnMouseListener();
-		pnlHorizontal.setDrawBtnEnabled(false);
+		if (isWorking) return;
 		
 		pnlHorizontal.startRolling(new CandidateList(candidateList));
 		
-		Timer timer = new Timer(false);
 		long period = currPrize.getDrawStrategy().getValue();
 		timer.schedule(new DrawTimerTask(), 0, period);
 	}
@@ -44,6 +46,7 @@ public class OnceDrawListener extends DrawListener {
 		
 		@Override
 		public void run() {
+			isWorking = true;
 			if (outcome.size(currPrize.getName()) < currPrize.getQuantity()) {
 				List<Candidate> candidates = candidateList.getCandidateList();
 				int randIdx = rand.nextInt(candidates.size());
@@ -54,6 +57,7 @@ public class OnceDrawListener extends DrawListener {
 				pnlHorizontal.stopRolling();
 				pnlHorizontal.clearRollingLabel();
 				this.cancel();
+				isWorking = false;
 			}
 			
 			try {
@@ -63,6 +67,11 @@ public class OnceDrawListener extends DrawListener {
 			}
 		}
 		
+	}
+
+	@Override
+	public boolean isWorking() {
+		return isWorking;
 	}
 	
 }

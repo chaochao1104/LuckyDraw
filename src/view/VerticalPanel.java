@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.MyToolkit;
 import util.ImageUtil;
 
 public class VerticalPanel extends JPanel {
@@ -41,7 +42,7 @@ public class VerticalPanel extends JPanel {
 		"4th-prize-s2.png",
 	};
 	
-	private static final int INTERVAL = 20;
+	private static final int INTERVAL = (int) (20 * MyToolkit.HEIGHT_SCALE);
 	
 	public VerticalPanel(Dimension preferredSize) throws FileNotFoundException {
 		this.setPreferredSize(preferredSize);
@@ -69,8 +70,12 @@ public class VerticalPanel extends JPanel {
 		
 		int tllHeight = 0;
 		for (int i = 0; i < btnCount; i++) {
-			imgIconState1sts[i] = ImageUtil.loadImgIcon(state1stImgNames[i]);
-			imgIconState2nds[i] = ImageUtil.loadImgIcon(state2ndImgNames[i]);
+			imgIconState1sts[i] = ImageUtil.loadImgIcon(state1stImgNames[i], 
+					MyToolkit.WIDTH_SCALE, 
+					MyToolkit.HEIGHT_SCALE);
+			imgIconState2nds[i] = ImageUtil.loadImgIcon(state2ndImgNames[i], 
+					MyToolkit.WIDTH_SCALE, 
+					MyToolkit.HEIGHT_SCALE);
 			tllHeight += imgIconState1sts[i].getIconHeight();
 		}
 		

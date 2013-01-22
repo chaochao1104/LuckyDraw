@@ -1,7 +1,9 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -24,6 +26,7 @@ import javax.swing.JPanel;
 import model.Absentee;
 import model.Candidate;
 import model.CandidateList;
+import model.MyToolkit;
 import model.Outcome;
 import model.OutcomeVisitor;
 import model.Prize;
@@ -37,13 +40,12 @@ import org.dom4j.DocumentException;
 import util.ExceptionUtil;
 import util.ImageUtil;
 import controller.strategy.DrawListener;
+import controller.strategy.NoninterruptableDrawListener;
 import controller.strategy.factory.DrawListenerFactory;
 public class ContentPane extends JPanel {
 
 	private static final long serialVersionUID = 5744529722826165904L;
-	
-
-	
+		
 	private static Logger logger = Logger.getLogger(ContentPane.class.getName());
 	
 	private PrizeDisplayPanel pnlPrizeDisplay;
@@ -163,25 +165,32 @@ public class ContentPane extends JPanel {
 	}
 
 	private void initComponents() throws FileNotFoundException {
-
-		setLayout(new BorderLayout(10, 20));
+		setLayout(new BorderLayout(10, 1));
 
 		pnlUpperBlankBar = new JPanel();
-		pnlUpperBlankBar.setPreferredSize(new Dimension(1280, 274));
+		pnlUpperBlankBar.setPreferredSize(
+				new Dimension(MyToolkit.SCREEN_SZIE.width, 
+						(int)(300 * MyToolkit.HEIGHT_SCALE)));
 		pnlUpperBlankBar.setOpaque(false);
 		this.add(pnlUpperBlankBar, BorderLayout.NORTH);
 
 		pnlBottomBlankBar = new JPanel();
-		pnlBottomBlankBar.setPreferredSize(new Dimension(1280, 22));
+		pnlBottomBlankBar.setPreferredSize(
+				new Dimension(MyToolkit.SCREEN_SZIE.width, 
+						(int)(38 * MyToolkit.HEIGHT_SCALE)));
 		pnlBottomBlankBar.setOpaque(false);
 		this.add(pnlBottomBlankBar, BorderLayout.SOUTH);
 
-		pnlPrizeDisplay = new PrizeDisplayPanel(new Dimension(400, 600));
+		pnlPrizeDisplay = new PrizeDisplayPanel(
+				new Dimension((int)(400 * MyToolkit.WIDTH_SCALE), 
+						(int)(690 * MyToolkit.HEIGHT_SCALE)));
 		pnlPrizeDisplay.setImg(nameIndexedPrizeImgs.get(currPrize.getImgName()));
 
 		this.add(pnlPrizeDisplay, BorderLayout.WEST);
 	
-		pnlDraw = new DrawPanel(new Dimension(867, 600));
+		pnlDraw = new DrawPanel(
+				new Dimension((int)(867 * MyToolkit.WIDTH_SCALE), 
+						(int)(600 * MyToolkit.HEIGHT_SCALE)));
 		
 		pnlDraw.setOpaque(false);
 		final MouseAdapter[] verticalMouseAdapters = new MouseAdapter[VerticalPanel.PRIZE_CATEGORY_QTY];
@@ -211,6 +220,7 @@ public class ContentPane extends JPanel {
 		
 		verticalMouseAdapters[VerticalPanel.PRIZE_CATEGORY_QTY - 1].mouseClicked(null);
 		imgMainBackground = ImageUtil.loadImg("main-background.jpg");
+		imgMainBackground = ImageUtil.fitSize(imgMainBackground, MyToolkit.SCREEN_SZIE);
 	}
 	
 	@Override
@@ -218,27 +228,28 @@ public class ContentPane extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+		
 		g2.drawImage(imgMainBackground, 0, 0, null);
 
 		/* debug */
-//		g2.setColor(Color.CYAN);
-//		paintRect(g2, pnlBottomBlankBar.getBounds());
-//		paintRect(g2, pnlUpperBlankBar.getBounds());
-//		paintRect(g2, pnlDraw.getBounds());
-//		paintRect(g2, pnlPrizeDisplay.getBounds());
+		g2.setColor(Color.CYAN);
+		paintRect(g2, pnlBottomBlankBar.getBounds());
+		paintRect(g2, pnlUpperBlankBar.getBounds());
+		paintRect(g2, pnlDraw.getBounds());
+		paintRect(g2, pnlPrizeDisplay.getBounds());
 //
-//		g2.translate(pnlDraw.getX(), pnlDraw.getY());
-//		paintRect(g2, pnlDraw.getPnlInnerDraw().getBounds());
-//		paintRect(g2, pnlDraw.getPnlVertical().getBounds());
-//		paintRect(g2, pnlDraw.getPnlHorizontal().getBounds());
-//		paintRect(g2, pnlDraw.getPnlInnerDraw().getCardPanel().getBounds());
-//		g2.translate(-pnlDraw.getX(), -pnlDraw.getY());
+		g2.translate(pnlDraw.getX(), pnlDraw.getY());
+		paintRect(g2, pnlDraw.getPnlInnerDraw().getBounds());
+		paintRect(g2, pnlDraw.getPnlVertical().getBounds());
+		paintRect(g2, pnlDraw.getPnlHorizontal().getBounds());
+		paintRect(g2, pnlDraw.getPnlInnerDraw().getCardPanel().getBounds());
+		g2.translate(-pnlDraw.getX(), -pnlDraw.getY());
 
-//		g2.setColor(Color.BLACK);
-//		g2.setFont(Font.getFont("ËÎÌו"));
-//		if (debugPoint != null) {
-//			g2.drawString(debugPoint.toString(), 0, 30);
-//		}
+		g2.setColor(Color.BLACK);
+		g2.setFont(Font.getFont("ËÎÌו"));
+		if (debugPoint != null) {
+			g2.drawString(debugPoint.toString(), 0, 30);
+		}
 	}
 
 	class VerticalMouseListener extends MouseAdapter {
@@ -252,6 +263,15 @@ public class ContentPane extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			HorizontalPanel pnlHorizontal = pnlDraw.getPnlHorizontal();
+			
+			if (pnlHorizontal.getDrawBtnMouseListener() instanceof NoninterruptableDrawListener) {
+				NoninterruptableDrawListener drawBtnMouseListener = 
+						(NoninterruptableDrawListener) pnlHorizontal.getDrawBtnMouseListener();
+				if (drawBtnMouseListener.isWorking())
+					return;
+			}
+			
 			VerticalPanel pnlVertical = pnlDraw.getPnlVertical();
 			pnlVertical.setOnlyButtonDown(idx);
 
@@ -260,7 +280,6 @@ public class ContentPane extends JPanel {
 			candidateList = nameIndexedCandidateLists.get(currPrize.getCandidateListName());
 			Image prizeImg = nameIndexedPrizeImgs.get(currPrize.getImgName());
 			
-			HorizontalPanel pnlHorizontal = pnlDraw.getPnlHorizontal();
 			pnlHorizontal.stopRolling();
 			pnlHorizontal.clearRollingLabel();
 			pnlHorizontal.setRedrawBtnEnabled(currPrize.needRedraw());

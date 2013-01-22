@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import model.Candidate;
 import model.CandidateList;
+import model.MyToolkit;
 
 import org.apache.log4j.Logger;
 
@@ -31,7 +32,7 @@ public class HorizontalPanel extends JPanel {
 	
 	private static final int FONT_STYLE = Font.BOLD;
 	
-	private static final int FONT_SIZE = 70;
+	private static final int FONT_SIZE = 50;
 	
 	private static Logger logger = Logger.getLogger(HorizontalPanel.class.getName());
 
@@ -66,12 +67,12 @@ public class HorizontalPanel extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		c.ipadx = 0;
 		c.gridx = 0;
-		c.insets = new Insets(0, -50, 0, 70);
+		c.insets = new Insets(0, (int) (-50 * MyToolkit.WIDTH_SCALE), 0, (int) (70 * MyToolkit.WIDTH_SCALE));
 		c.anchor = GridBagConstraints.CENTER;
 		c.fill = GridBagConstraints.BOTH;
 		this.add(lblRoll, c);
 		
-		c.insets = new Insets(0, 0, 0, 10);
+		c.insets = new Insets(0, 0, 0, (int) (10 * MyToolkit.WIDTH_SCALE));
 		c.ipadx = 0;
 		c.gridx = 1;
 		c.anchor = GridBagConstraints.CENTER;
@@ -85,22 +86,30 @@ public class HorizontalPanel extends JPanel {
 	
 	private void initComponents() throws FileNotFoundException {
 		lblRoll = new JLabel();
-		lblRoll.setPreferredSize(new Dimension(200, 50));
+		lblRoll.setPreferredSize(
+				new Dimension((int)(200 * MyToolkit.WIDTH_SCALE), 
+						(int)(50 * MyToolkit.HEIGHT_SCALE)));
+		
 		lblRoll.setForeground(Color.DARK_GRAY);
 		lblRoll.setFont(new Font(FONT_NAME, FONT_STYLE, FONT_SIZE));
 		lblRoll.setHorizontalAlignment(JLabel.CENTER);
 //		lblRoll.setOpaque(true); //for test
 //		lblRoll.setBackground(Color.ORANGE); //for test
 		
-		icoDrawStop = ImageUtil.loadImgIcon("draw-stop.png");
-		icoDrawRoll = ImageUtil.loadImgIcon("draw-go.png");
+		icoDrawStop = ImageUtil.loadImgIcon("draw-stop.png", 
+				MyToolkit.WIDTH_SCALE, 
+				MyToolkit.HEIGHT_SCALE);
+		icoDrawRoll = ImageUtil.loadImgIcon("draw-go.png", 
+				MyToolkit.WIDTH_SCALE, 
+				MyToolkit.HEIGHT_SCALE);
 		lblDraw = new JLabel(icoDrawRoll);
 		lblDraw.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		ImageIcon icoRedraw = ImageUtil.loadImgIcon("redraw.png");
+		ImageIcon icoRedraw = ImageUtil.loadImgIcon("redraw.png", 
+				MyToolkit.WIDTH_SCALE, 
+				MyToolkit.HEIGHT_SCALE);
 		lblRedraw = new JLabel(icoRedraw);
 		lblRedraw.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
 	}
 
 	public void removeDrawBtnMouseListener() {

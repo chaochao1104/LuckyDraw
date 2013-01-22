@@ -11,18 +11,23 @@ public class ImageUtil {
 
 	public static Image loadImg(String filename)
 			throws FileNotFoundException {
-		return loadImgIcon(filename).getImage();
+		return loadImgIcon(filename, 1, 1).getImage();
 	}
 	
-	public static ImageIcon loadImgIcon(String filename)
+	public static ImageIcon loadImgIcon(String filename, double widthScale, double heightScale)
 			throws FileNotFoundException {
 		String relativeFilePath = "res/img/" + filename;
-		ImageIcon ret = new ImageIcon(relativeFilePath);
-		if (ret.getImageLoadStatus() == MediaTracker.COMPLETE)
-			return ret;
+		ImageIcon ico = new ImageIcon(relativeFilePath);
+		if (ico.getImageLoadStatus() != MediaTracker.COMPLETE)
+			throw new FileNotFoundException("Failed to load image: "
+					+ relativeFilePath);
 
-		throw new FileNotFoundException("Failed to load image: "
-				+ relativeFilePath);
+		Image fittedImg = ico.getImage();
+		Dimension scaledDimension = new Dimension();
+		scaledDimension.setSize(ico.getIconWidth() * widthScale, ico.getIconHeight() * heightScale);
+		fittedImg = fitSize(ico.getImage(), scaledDimension);
+		
+		return new ImageIcon(fittedImg);
 	}
 
 	public static Image fitSize(Image img, Dimension d) {

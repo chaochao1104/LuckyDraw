@@ -1,5 +1,8 @@
 package view;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
@@ -30,7 +33,10 @@ public class MainWindow {
 		frame.setResizable(false);
 		frame.setUndecorated(true);
 
-		frame.setSize(1280, 1024);
+		Toolkit toolKit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = toolKit.getScreenSize();
+		
+		frame.setSize(screenSize.width, screenSize.height);
 		frame.setLocationRelativeTo(null);//appear in center of the screen.
 		
 		try {

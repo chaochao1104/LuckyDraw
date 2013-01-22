@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JPanel;
 
+import model.MyToolkit;
+
 public class DrawPanel extends JPanel {
 	
 	private static final long serialVersionUID = -6985725399213380053L;
@@ -21,13 +23,19 @@ public class DrawPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(preferredSize);
 		
-		pnlInnerDraw = new InnerDrawPanel(new Dimension(preferredSize.width - 170, preferredSize.height - 70));
+		pnlInnerDraw = new InnerDrawPanel(
+				new Dimension(preferredSize.width - (int)(170 * MyToolkit.WIDTH_SCALE), 
+						preferredSize.height - (int)(70 * MyToolkit.HEIGHT_SCALE)));
 		
-		pnlVertical = new VerticalPanel(new Dimension(170, preferredSize.height));
-		pnlHorizontal = new HorizontalPanel(new Dimension(preferredSize.width, 70));
+		pnlVertical = new VerticalPanel(
+				new Dimension((int)(170 * MyToolkit.WIDTH_SCALE), 
+						      preferredSize.height));
+		pnlHorizontal = new HorizontalPanel(
+				new Dimension(preferredSize.width, 
+				              (int)(70 * MyToolkit.HEIGHT_SCALE)));
 		
 		this.add(pnlInnerDraw, BorderLayout.CENTER);
-		this.add(pnlVertical, BorderLayout.EAST);		
+		this.add(pnlVertical, BorderLayout.EAST);
 		this.add(pnlHorizontal, BorderLayout.SOUTH);
 	}
 	
