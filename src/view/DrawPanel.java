@@ -3,10 +3,12 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 import model.MyToolkit;
+import model.Prize;
 
 public class DrawPanel extends JPanel {
 	
@@ -18,14 +20,15 @@ public class DrawPanel extends JPanel {
 	
 	private HorizontalPanel pnlHorizontal;
 	
-	public DrawPanel(Dimension preferredSize) throws FileNotFoundException {
+	public DrawPanel(Dimension preferredSize, List<Prize> prizes) throws FileNotFoundException {
 		super();
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(preferredSize);
 		
 		pnlInnerDraw = new InnerDrawPanel(
 				new Dimension(preferredSize.width - (int)(170 * MyToolkit.WIDTH_SCALE), 
-						preferredSize.height - (int)(70 * MyToolkit.HEIGHT_SCALE)));
+						preferredSize.height - (int)(70 * MyToolkit.HEIGHT_SCALE)),
+						prizes);
 		
 		pnlVertical = new VerticalPanel(
 				new Dimension((int)(170 * MyToolkit.WIDTH_SCALE), 

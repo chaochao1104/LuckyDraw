@@ -22,6 +22,8 @@ public class Prize {
 	private FontGroup winnerfontGroup;
 	
 	private FontGroup absentWinnerFontGroup;
+	
+	private int displayBlockQty;
 
 	public String getName() {
 		return name;
@@ -93,6 +95,14 @@ public class Prize {
 
 	public void setAbsentWinnerFontGroup(FontGroup absentWinnerFontGroup) {
 		this.absentWinnerFontGroup = absentWinnerFontGroup;
+	}
+
+	public int getDisplayBlockQty() {
+		return displayBlockQty;
+	}
+
+	public void setDisplayBlockQty(int displayColumnQty) {
+		this.displayBlockQty = displayColumnQty;
 	}
 	
 	

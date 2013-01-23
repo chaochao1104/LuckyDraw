@@ -1,14 +1,11 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,7 +29,7 @@ import model.OutcomeVisitor;
 import model.Prize;
 import model.exception.NoCandidateListFoundError;
 import model.exception.NoPrizeFoundError;
-import model.persistence.ModelPersistenter;
+import model.persistence.ModelPersistence;
 
 import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
@@ -101,7 +98,7 @@ public class ContentPane extends JPanel {
 	}
 
 	private void initModels() throws UnsupportedEncodingException, FileNotFoundException, DocumentException, NoPrizeFoundError, NoCandidateListFoundError {
-		prizes = ModelPersistenter.loadPrizes();
+		prizes = ModelPersistence.loadPrizes();
 		
 		if (prizes == null || prizes.isEmpty())
 			throw new NoPrizeFoundError();
@@ -114,7 +111,7 @@ public class ContentPane extends JPanel {
 			nameIndexedPrizes.put(prize.getName(), prize);
 		}
 
-		for (CandidateList candidateList : ModelPersistenter.loadCandidates())
+		for (CandidateList candidateList : ModelPersistence.loadCandidates())
 			nameIndexedCandidateLists.put(candidateList.getName(), candidateList);
 		
 		if (nameIndexedCandidateLists.isEmpty())
@@ -123,11 +120,11 @@ public class ContentPane extends JPanel {
 		currPrize = prizes.get(0);
 		candidateList = nameIndexedCandidateLists.get(currPrize.getCandidateListName());
 		
-		absentees = ModelPersistenter.loadAbsentees();
+		absentees = ModelPersistence.loadAbsentees();
 		
 		boolean isOutcomeExisting = true;
 		try {
-			outcome = ModelPersistenter.loadOutcome();
+			outcome = ModelPersistence.loadOutcome();
 		} catch (FileNotFoundException e1) {
 			isOutcomeExisting = false;
 		} catch (DocumentException e1) {
@@ -182,15 +179,16 @@ public class ContentPane extends JPanel {
 		this.add(pnlBottomBlankBar, BorderLayout.SOUTH);
 
 		pnlPrizeDisplay = new PrizeDisplayPanel(
-				new Dimension((int)(400 * MyToolkit.WIDTH_SCALE), 
-						(int)(690 * MyToolkit.HEIGHT_SCALE)));
+				new Dimension((int)(330 * MyToolkit.WIDTH_SCALE), 
+						(int)(500 * MyToolkit.HEIGHT_SCALE)));
 		pnlPrizeDisplay.setImg(nameIndexedPrizeImgs.get(currPrize.getImgName()));
 
 		this.add(pnlPrizeDisplay, BorderLayout.WEST);
 	
 		pnlDraw = new DrawPanel(
 				new Dimension((int)(867 * MyToolkit.WIDTH_SCALE), 
-						(int)(600 * MyToolkit.HEIGHT_SCALE)));
+						(int)(600 * MyToolkit.HEIGHT_SCALE)),
+						prizes);
 		
 		pnlDraw.setOpaque(false);
 		final MouseAdapter[] verticalMouseAdapters = new MouseAdapter[VerticalPanel.PRIZE_CATEGORY_QTY];
@@ -231,25 +229,25 @@ public class ContentPane extends JPanel {
 		
 		g2.drawImage(imgMainBackground, 0, 0, null);
 
-		/* debug */
-		g2.setColor(Color.CYAN);
-		paintRect(g2, pnlBottomBlankBar.getBounds());
-		paintRect(g2, pnlUpperBlankBar.getBounds());
-		paintRect(g2, pnlDraw.getBounds());
-		paintRect(g2, pnlPrizeDisplay.getBounds());
+//		/* debug */
+//		g2.setColor(Color.CYAN);
+//		paintRect(g2, pnlBottomBlankBar.getBounds());
+//		paintRect(g2, pnlUpperBlankBar.getBounds());
+//		paintRect(g2, pnlDraw.getBounds());
+//		paintRect(g2, pnlPrizeDisplay.getBounds());
 //
-		g2.translate(pnlDraw.getX(), pnlDraw.getY());
-		paintRect(g2, pnlDraw.getPnlInnerDraw().getBounds());
-		paintRect(g2, pnlDraw.getPnlVertical().getBounds());
-		paintRect(g2, pnlDraw.getPnlHorizontal().getBounds());
-		paintRect(g2, pnlDraw.getPnlInnerDraw().getCardPanel().getBounds());
-		g2.translate(-pnlDraw.getX(), -pnlDraw.getY());
-
-		g2.setColor(Color.BLACK);
-		g2.setFont(Font.getFont("ËÎÌו"));
-		if (debugPoint != null) {
-			g2.drawString(debugPoint.toString(), 0, 30);
-		}
+//		g2.translate(pnlDraw.getX(), pnlDraw.getY());
+//		paintRect(g2, pnlDraw.getPnlInnerDraw().getBounds());
+//		paintRect(g2, pnlDraw.getPnlVertical().getBounds());
+//		paintRect(g2, pnlDraw.getPnlHorizontal().getBounds());
+//		paintRect(g2, pnlDraw.getPnlInnerDraw().getCardPanel().getBounds());
+//		g2.translate(-pnlDraw.getX(), -pnlDraw.getY());
+//
+//		g2.setColor(Color.BLACK);
+//		g2.setFont(Font.getFont("ËÎÌו"));
+//		if (debugPoint != null) {
+//			g2.drawString(debugPoint.toString(), 0, 30);
+//		}
 	}
 
 	class VerticalMouseListener extends MouseAdapter {
@@ -273,7 +271,7 @@ public class ContentPane extends JPanel {
 			}
 			
 			VerticalPanel pnlVertical = pnlDraw.getPnlVertical();
-			pnlVertical.setOnlyButtonDown(idx);
+			pnlVertical.setOnlyTheButtonDown(idx);
 
 			pnlDraw.getPnlInnerDraw().show(idx);
 			currPrize = prizes.get(idx);
@@ -300,15 +298,15 @@ public class ContentPane extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			String winnerNo = pnlDraw.getPnlInnerDraw().removeLastWinner(); //To re-add into candidateList or not?
+			String winnerNo = pnlDraw.getPnlInnerDraw().removeLastWinner();
 			pnlDraw.getPnlHorizontal().clearRollingLabel();
 			int idx = winnerNo.indexOf(' ');
 			if (-1 == idx) return;
-			outcome.remove(winnerNo.substring(0, idx));
+			outcome.remove(winnerNo.substring(0, idx).trim());
 			pnlDraw.getPnlHorizontal().setDrawBtnEnabled(outcome.size(currPrize.getName()) < currPrize.getQuantity());
 			
 			try {
-				ModelPersistenter.persistOutcome(outcome);
+				ModelPersistence.persistOutcome(outcome);
 			} catch (IOException e2) {
 				logger.error(ExceptionUtil.getStackTrace(e2));
 			}
@@ -316,9 +314,9 @@ public class ContentPane extends JPanel {
 	}
 
 	// for debug
-	public void paintRect(Graphics g, Rectangle rect) {
-		Graphics2D g2 = (Graphics2D) g;
-		g2.drawRect(rect.x + 1, rect.y + 1, rect.width - 3, rect.height - 3);
-	}
+//	public void paintRect(Graphics g, Rectangle rect) {
+//		Graphics2D g2 = (Graphics2D) g;
+//		g2.drawRect(rect.x + 1, rect.y + 1, rect.width - 3, rect.height - 3);
+//	}
 
 }

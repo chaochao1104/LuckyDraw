@@ -28,6 +28,8 @@ public class HorizontalPanel extends JPanel {
 
 	private static final long serialVersionUID = 6677235068546682813L;
 
+	private static final Color ROLL_TXT_COLOR = new Color(176, 0, 0); 
+	
 	private static final String FONT_NAME = "Comic Sans MS";
 	
 	private static final int FONT_STYLE = Font.BOLD;
@@ -67,7 +69,7 @@ public class HorizontalPanel extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		c.ipadx = 0;
 		c.gridx = 0;
-		c.insets = new Insets(0, (int) (-50 * MyToolkit.WIDTH_SCALE), 0, (int) (70 * MyToolkit.WIDTH_SCALE));
+		c.insets = new Insets(0, (int) (70 * MyToolkit.WIDTH_SCALE), 0, (int) (100 * MyToolkit.WIDTH_SCALE));
 		c.anchor = GridBagConstraints.CENTER;
 		c.fill = GridBagConstraints.BOTH;
 		this.add(lblRoll, c);
@@ -90,7 +92,7 @@ public class HorizontalPanel extends JPanel {
 				new Dimension((int)(200 * MyToolkit.WIDTH_SCALE), 
 						(int)(50 * MyToolkit.HEIGHT_SCALE)));
 		
-		lblRoll.setForeground(Color.DARK_GRAY);
+		lblRoll.setForeground(ROLL_TXT_COLOR);
 		lblRoll.setFont(new Font(FONT_NAME, FONT_STYLE, FONT_SIZE));
 		lblRoll.setHorizontalAlignment(JLabel.CENTER);
 //		lblRoll.setOpaque(true); //for test

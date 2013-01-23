@@ -31,10 +31,12 @@ public class PrizeDisplayPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		Image tempImg = ImageUtil.fitSize(img, new Dimension((int) (this.getWidth() * 0.72), (int) (this.getHeight() * 0.8)));
+		Dimension imgSize = this.getSize();
+		imgSize.setSize(imgSize.getWidth() * 0.9, imgSize.getHeight() * 0.8);
+		Image tempImg = ImageUtil.fitSizeInSameRatio(img, imgSize);
 		g2.drawImage(tempImg, 
 				    (int) ((this.getWidth() - tempImg.getWidth(null)) / 2 ), 
-				    (int) ((this.getHeight() * 0.83 - tempImg.getHeight(null)) / 2), 
+				    (int) ((this.getHeight() * 0.8 - tempImg.getHeight(null)) / 2), 
 				    null);
 		
 	}

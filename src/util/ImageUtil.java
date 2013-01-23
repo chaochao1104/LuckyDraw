@@ -40,4 +40,12 @@ public class ImageUtil {
 				d.width, d.height, Image.SCALE_SMOOTH)).getImage();
 	}
 	
+	public static Image fitSizeInSameRatio(Image img, Dimension d) {
+		double maxRatio = Math.max(img.getWidth(null) / d.getWidth(), img.getHeight(null) / d.getHeight());
+		Dimension fittedDimension = new Dimension();
+		fittedDimension.setSize(img.getWidth(null) / maxRatio, img.getHeight(null) / maxRatio);
+		
+		return fitSize(img, fittedDimension);
+	}
+	
 }

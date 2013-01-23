@@ -10,7 +10,7 @@ import java.util.TimerTask;
 import model.Candidate;
 import model.CandidateList;
 import model.DrawStrategy.DrawStrategyType;
-import model.persistence.ModelPersistenter;
+import model.persistence.ModelPersistence;
 
 import org.apache.log4j.Logger;
 
@@ -18,7 +18,7 @@ import util.ExceptionUtil;
 import controller.strategy.NoninterruptableDrawListener;
 
 public class OnceDrawListener extends NoninterruptableDrawListener {
-
+	
 	private static Logger logger = Logger.getLogger(OnceDrawListener.class.getName());
 	
 	private Timer timer = new Timer(false);
@@ -61,7 +61,7 @@ public class OnceDrawListener extends NoninterruptableDrawListener {
 			}
 			
 			try {
-				ModelPersistenter.persistOutcome(outcome);
+				ModelPersistence.persistOutcome(outcome);
 			} catch (IOException e2) {
 				logger.error(ExceptionUtil.getStackTrace(e2));
 			}

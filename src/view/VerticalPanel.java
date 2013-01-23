@@ -18,8 +18,6 @@ public class VerticalPanel extends JPanel {
 
 	private static final long serialVersionUID = 2724873362749474725L;
 
-	public static final int PRIZE_CATEGORY_QTY = 5;
-	
 	private JLabel[] lblPrizes;
 	
 	private ImageIcon[] imgIconState1sts;
@@ -32,6 +30,7 @@ public class VerticalPanel extends JPanel {
 		"2nd-prize-s1.png",
 		"3rd-prize-s1.png",
 		"4th-prize-s1.png",
+		"mgr-prize-s1.png"
 	};
 	
 	private static final String[] state2ndImgNames = {
@@ -40,9 +39,12 @@ public class VerticalPanel extends JPanel {
 		"2nd-prize-s2.png",
 		"3rd-prize-s2.png",
 		"4th-prize-s2.png",
+		"mgr-prize-s2.png"
 	};
 	
-	private static final int INTERVAL = (int) (20 * MyToolkit.HEIGHT_SCALE);
+	public static final int PRIZE_CATEGORY_QTY = state1stImgNames.length;
+	
+	private static final int INTERVAL = (int) (28 * MyToolkit.HEIGHT_SCALE);
 	
 	public VerticalPanel(Dimension preferredSize) throws FileNotFoundException {
 		this.setPreferredSize(preferredSize);
@@ -52,13 +54,13 @@ public class VerticalPanel extends JPanel {
 		initComponents();
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridy = 0;
-		c.ipady = 8;
+		c.ipady = 4;
 		for (JLabel lblPrize : lblPrizes) {
 			this.add(lblPrize, c);
 			c.gridy++;
 		}
 		
-		setOnlyButtonDown(0);
+		setOnlyTheButtonDown(0);
 	}
 	
 	private void initComponents() throws FileNotFoundException {
@@ -100,7 +102,7 @@ public class VerticalPanel extends JPanel {
 			lblPrizes[i].addMouseListener(mouseListeners[i]);
 	}
 	
-	public void setOnlyButtonDown(int idx) {
+	public void setOnlyTheButtonDown(int idx) {
 		if (idx < 0 || idx > PRIZE_CATEGORY_QTY - 1)
 			throw new IllegalArgumentException();
 		

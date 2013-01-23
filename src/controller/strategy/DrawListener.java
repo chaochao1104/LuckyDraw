@@ -16,9 +16,9 @@ import view.InnerDrawPanel;
 
 public abstract class DrawListener extends MouseAdapter {
 	
-	private static final String DISPLAY_TXT_PREFIX = "  ";
+	private static final String DISPLAY_TXT_PREFIX = " ";
 	
-	private static final String DISPLAY_TXT_SUFFIX = "  ";
+	private static final String DISPLAY_TXT_SUFFIX = " ";
 	
 	private static final String ABSENT_TIP = "º”∞‡÷–...";
 	

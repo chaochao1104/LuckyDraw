@@ -37,7 +37,7 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
 @SuppressWarnings("unchecked")
-public class ModelPersistenter {
+public class ModelPersistence {
 	
 	public static final String FILE_IO_CHARSET = "UTF-8";
 	
@@ -57,6 +57,7 @@ public class ModelPersistenter {
 			prize.setImgName(node.selectSingleNode("img").getText());
 			prize.setDeccription(node.selectSingleNode("description").getText());
 			prize.setQuantity(Integer.parseInt(node.selectSingleNode("quantity").getText()));
+			prize.setDisplayBlockQty(Integer.parseInt(node.selectSingleNode("display-block-quantity").getText()));
 			Node needRedrawNode = node.selectSingleNode("need-redraw");
 			String needRedraw = needRedrawNode == null? "false" : needRedrawNode.getText();
 			prize.setNeedRedraw("true".equalsIgnoreCase(needRedraw));

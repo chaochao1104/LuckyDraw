@@ -4,24 +4,28 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.List;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import model.Prize;
 
 public class InnerDrawPanel extends JPanel {
 	
 	private static final long serialVersionUID = 5079948721745142011L;
 	
-	private JPanel[] pnlDrawWinners = new JPanel[VerticalPanel.PRIZE_CATEGORY_QTY];
+	private WinnerBoard[] pnlDrawWinners = new WinnerBoard[VerticalPanel.PRIZE_CATEGORY_QTY];
 	
 	private JPanel pnlCard = new JPanel(true);
 	
 	private int currentCardIdx = 0;
-		
-	public InnerDrawPanel(Dimension preferredSize) {
+	
+	private List<Prize> prizes; 
+	
+	public InnerDrawPanel(Dimension preferredSize, List<Prize> prizes) {
 		super(true);
+		this.prizes = prizes;
 		this.setPreferredSize(preferredSize);
 		this.setLayout(new BorderLayout());
 		this.setOpaque(false);
@@ -38,12 +42,12 @@ public class InnerDrawPanel extends JPanel {
 		pnlCard.setOpaque(false);
 		pnlCard.setLayout(new CardLayout());
 
-		this.add(pnlCard);
+		this.add(pnlCard, BorderLayout.CENTER);
 		
 		for (int i = 0; i < VerticalPanel.PRIZE_CATEGORY_QTY; i++) {
-			JPanel panel = new JPanel();
+			WinnerBoard panel = new WinnerBoard(prizes.get(i).getDisplayBlockQty());
 			panel.setOpaque(false);
-			panel.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 15));
+			//panel.setLayout();
 			panel.setPreferredSize(new Dimension(preferredSize.width, 0));
 			
 			pnlDrawWinners[i] = panel;
@@ -62,31 +66,11 @@ public class InnerDrawPanel extends JPanel {
 	}
 	
 	public void addWinnerToBoard(String displayTxt, String tip, Font font, Color color) {
-		JLabel displayLabel = new JLabel();
-		displayLabel.setFont(font);
-		
-		displayLabel.setBackground(new Color(204, 204, 204));
-		displayLabel.setOpaque(true);
-		displayLabel.setForeground(color);
-		displayLabel.setText(displayTxt);
-		displayLabel.setToolTipText(tip);
-		pnlDrawWinners[currentCardIdx].add(displayLabel);
-		displayLabel.revalidate(); //to show immediately.
-		displayLabel.repaint();
+		pnlDrawWinners[currentCardIdx].addWinner(displayTxt, tip, font, color);
 	}
 	
 	public String removeLastWinner() {
-		JPanel pnl = pnlDrawWinners[currentCardIdx];
-		final int lastCompIdx = pnl.getComponentCount() - 1;
-		
-		if (lastCompIdx < 0) return "";
-		
-		JLabel lblLastWinner = (JLabel) pnl.getComponent(lastCompIdx);
-		pnl.remove(lastCompIdx);
-		
-		pnl.revalidate();
-		pnl.repaint();
-		return lblLastWinner.getText();
+		return pnlDrawWinners[currentCardIdx].removeLastWinner();
 	}
 	
 	public JPanel getCardPanel() {

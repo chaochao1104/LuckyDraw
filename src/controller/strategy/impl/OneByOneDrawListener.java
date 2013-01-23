@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import model.Candidate;
 import model.DrawStrategy.DrawStrategyType;
-import model.persistence.ModelPersistenter;
+import model.persistence.ModelPersistence;
 
 import org.apache.log4j.Logger;
 
@@ -35,7 +35,7 @@ public class OneByOneDrawListener extends DrawListener {
 			pnlHorizontal.setDrawBtnImgRoll();
 			
 			try {
-				ModelPersistenter.persistOutcome(outcome);
+				ModelPersistence.persistOutcome(outcome);
 			} catch (IOException e2) {
 				logger.error(ExceptionUtil.getStackTrace(e2));
 			}

@@ -6,32 +6,35 @@
 		<description>200元交通卡</description>
 		<candidate-list>general</candidate-list>
 		<quantity>2</quantity>
+		<display-block-quantity>2</display-block-quantity>
 		<strategy name="ONE_BY_ONE"></strategy>
-		<winner-font-group name="Arial" size="35" style="1" color="#000000" />
-		<absent-winner-font-group name="Arial" size="35" style="2" color="#ff0000" />
+		<winner-font-group name="Arial" size="35" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Arial" size="35" style="2" color="#ffffff" />
 	</prize>
 	
 	<prize>
-		<name>一等奖</name>
+		<name>梦想奖</name>
 		<need-redraw>true</need-redraw>
 		<img>1st-prize.png</img>
 		<description>24K 金条 100G</description>
 		<candidate-list>general</candidate-list>
-		<quantity>1</quantity>
+		<quantity>10</quantity>
+		<display-block-quantity>3</display-block-quantity>
 		<strategy name="ONE_BY_ONE"></strategy>
-		<winner-font-group name="Arial" size="40" style="1" color="#000000" />
-		<absent-winner-font-group name="Arial" size="40" style="2" color="#ff0000" />
+		<winner-font-group name="Arial" size="15" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Arial" size="40" style="2" color="#ffffff" />
 	</prize>
 	
-	<prize> 
+	<prize>
 		<name>二等奖</name>
 		<img>2nd-prize.png</img>
 		<description>iphone 5 64G</description>
 		<candidate-list>general</candidate-list>
 		<quantity>10</quantity>
+		<display-block-quantity>3</display-block-quantity>
 		<strategy name="one_by_one"></strategy>
-		<winner-font-group name="Arial" size="35" style="1" color="#000000" />
-		<absent-winner-font-group name="Arial" size="35" style="2" color="#ff0000" />
+		<winner-font-group name="Arial" size="35" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Arial" size="35" style="2" color="#ffffff" />
 	</prize>
 	
 	<prize> 
@@ -39,21 +42,35 @@
 		<img>3rd-prize.png</img>
 		<description>iphone 4s 16G</description>
 		<candidate-list>general</candidate-list>
-		<quantity>20</quantity>
+		<quantity>50</quantity>
+		<display-block-quantity>2</display-block-quantity>
 		<strategy name="ONE_BY_ONE"></strategy>
-		<winner-font-group name="Arial" size="30" style="1" color="#000000" />
-		<absent-winner-font-group name="Arial" size="30" style="2" color="#ff0000" />
+		<winner-font-group name="Arial" size="20" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Arial" size="20" style="2" color="#ffffff" />
 	</prize>
 	
-	<prize> 
+	<prize>
 		<name>四等奖</name>
 		<img>4th-prize.png</img>
 		<description>iphone 4 16G</description>
 		<candidate-list>0-9</candidate-list>
 		<quantity>10</quantity>
+		<display-block-quantity>5</display-block-quantity>
 		<strategy name="ONCE" value="500"></strategy>
-		<winner-font-group name="Arial" size="100" style="1" color="#000000" />
-		<absent-winner-font-group name="Arial" size="35" style="2" color="#ff0000" />
+		<winner-font-group name="Arial" size="100" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Arial" size="35" style="2" color="#ffffff" />
+	</prize>
+	
+	<prize>
+		<name>经理奖</name>
+		<img>3rd-prize.png</img>
+		<description>fdfgfd	</description>
+		<candidate-list>general</candidate-list>
+		<quantity>2</quantity>
+		<display-block-quantity>2</display-block-quantity>
+		<strategy name="ONE_BY_ONE"></strategy>
+		<winner-font-group name="Arial" size="30" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Arial" size="30" style="2" color="#ffffff" />
 	</prize>
 	
 </prizes>
