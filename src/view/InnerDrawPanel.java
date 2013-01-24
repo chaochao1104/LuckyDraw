@@ -47,7 +47,6 @@ public class InnerDrawPanel extends JPanel {
 		for (int i = 0; i < VerticalPanel.PRIZE_CATEGORY_QTY; i++) {
 			WinnerBoard panel = new WinnerBoard(prizes.get(i).getDisplayBlockQty());
 			panel.setOpaque(false);
-			//panel.setLayout();
 			panel.setPreferredSize(new Dimension(preferredSize.width, 0));
 			
 			pnlDrawWinners[i] = panel;

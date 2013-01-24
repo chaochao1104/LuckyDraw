@@ -1,10 +1,10 @@
 package view;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -43,7 +43,8 @@ public class WinnerBoard extends JPanel {
 			JPanel panel = new JPanel();
 			panel = new JPanel();
 			panel.setOpaque(false);
-			panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			//panel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 5));
+			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 			
 			this.add(panels[i] = panel);
 		}

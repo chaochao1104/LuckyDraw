@@ -57,8 +57,8 @@
 		<quantity>10</quantity>
 		<display-block-quantity>5</display-block-quantity>
 		<strategy name="ONCE" value="500"></strategy>
-		<winner-font-group name="Arial" size="120" style="1" color="#ffffff" />
-		<absent-winner-font-group name="Arial" size="35" style="2" color="#ffffff" />
+		<winner-font-group name="Arial" size="80" style="1" color="#ffffff" />
+		<absent-winner-font-group name="Arial" size="50" style="2" color="#ffffff" />
 	</prize>
 	
 	<prize>
